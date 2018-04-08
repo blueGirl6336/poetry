@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.demo.dao.UserDao">
+	<resultMap id="UserResultMap" type="com.demo.pojo.User">
+	    <id column="user_id" jdbcType="INTEGER" property="userId" />
+	    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+	    <result column="user_password" jdbcType="VARCHAR" property="password" />
+	</resultMap>
+	
+	<sql id="User_Column_List">
+    	user_id, user_name, user_password
+  	</sql>
+  	
+  	<!--根据用户id查询用户 -->
+	<select id="queryUserById" parameterType="int" resultType="UserResultMap">
+		select user_id,user_name from tb_user where user_id=#{user_id}
+	</select>
+	
+	<!--新增用户 -->
+    <insert id="insertUser" parameterType="com.demo.pojo.User">
+        insert into tb_user(user_name,user_password) 
+        values(#{userName},#{password});
+    </insert>
+    
+    <!--编辑用户 -->
+    <update id="updateUser" parameterType="com.demo.pojo.User">
+        update tb_user 
+        <set>
+	      <if test="userName != null">
+	        user_name = #{userName,jdbcType=VARCHAR},
+	      </if>
+	      <if test="password != null">
+	        user_password = #{password,jdbcType=VARCHAR},
+	      </if>
+	    </set> 
+        where user_id=#{userId}
+    </update>
+	
+</mapper>
