@@ -10,6 +10,8 @@ public class User {
 	//用户密码
 	private String password;
 	
+	private String token;
+	
 	public int getUserId() {
 		return userId;
 	}
@@ -29,5 +31,12 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
 	}
 }

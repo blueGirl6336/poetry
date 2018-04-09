@@ -28,4 +28,10 @@ public interface UserDao {
 	 */
 	public int updateUser(User user);
 	
+	/**
+	 * 根据用户名查找用户
+	 * @param userName
+	 * @return
+	 */
+	User selectByUserName(String userName);
 }
