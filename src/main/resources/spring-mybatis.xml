@@ -39,11 +39,11 @@
         <!-- 当连接池中的连接耗尽的时候c3p0一次同时获取的连接数 -->
         <property name="acquireIncrement" value="${acquireIncrement}"></property>
         <!-- 初始连接池大小 -->
-        <property name="initialPoolSize" value="${mysql.initialPoolSize}"></property>
+        <property name="initialPoolSize" value="${initialPoolSize}"></property>
         <!-- 连接池中连接最小个数 -->
-        <property name="minPoolSize" value="${mysql.minPoolSize}"></property>
+        <property name="minPoolSize" value="${minPoolSize}"></property>
         <!-- 连接池中连接最大个数 -->
-        <property name="maxPoolSize" value="${mysql.maxPoolSize}"></property>
+        <property name="maxPoolSize" value="${maxPoolSize}"></property>
     </bean>  
     
     <!-- ========================================针对myBatis的配置项============================== -->

@@ -16,8 +16,8 @@ import org.springframework.stereotype.Component;
 import com.demo.bean.UserBean;
 import com.demo.service.UserService;
 
-@Component
-public class LoginFilter implements Filter
-{
-
-}
+//@Component
+//public class LoginFilter implements Filter
+//{
+//
+//}

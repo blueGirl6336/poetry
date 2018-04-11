@@ -34,8 +34,7 @@ public class UserController
 	 */
 	@RequestMapping("/loginWithUserName")
 	@ResponseBody
-	public Map<String, Object> loginWithUserName(@RequestParam String userName, @RequestParam String password,
-			@RequestParam String checkCode)
+	public Map<String, Object> loginWithUserName(@RequestParam String userName, @RequestParam String password)
 	{
 		UserBean userBean = userService.loginWithUserName(userName, password);
 		switch (userBean.getLoginResult())
