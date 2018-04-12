@@ -15,18 +15,18 @@
   	
   	<!--根据用户id查询用户 -->
 	<select id="queryUserById" parameterType="int" resultMap="UserResultMap">
-		select user_id,user_name from tb_user where user_id=#{user_id}
+		select user_id,user_name from user_table where user_id=#{user_id}
 	</select>
 	
 	<!--新增用户 -->
     <insert id="insertUser" parameterType="com.demo.pojo.User">
-        insert into tb_user(user_name,user_password) 
+        insert into user_table(user_name,user_password) 
         values(#{userName},#{password});
     </insert>
     
     <!--编辑用户 -->
     <update id="updateUser" parameterType="com.demo.pojo.User">
-        update tb_user 
+        update user_table 
         <set>
 	      <if test="userName != null">
 	        user_name = #{userName,jdbcType=VARCHAR},
@@ -42,7 +42,7 @@
 	<select id="selectByUserName" parameterType="java.lang.String" resultMap="UserResultMap">
 		select 
 		<include refid="User_Column_List" />
-		from tb_user
+		from user_table
 		where user_name = #{userName,jdbcType=VARCHAR}
 	</select>
 	

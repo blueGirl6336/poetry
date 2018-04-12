@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
 encoding//src/main/java/hitwh/fanghh/aop/ExceptionAdvice.java=UTF-8
 encoding//src/main/java/hitwh/fanghh/aop/PermissionAspect.java=UTF-8
 encoding//src/main/java/hitwh/fanghh/controller=UTF-8
@@ -21,4 +22,7 @@ encoding//src/main/java/hitwh/fanghh/util/ModifyFile.java=UTF-8
 encoding//src/main/java/hitwh/fanghh/util/PageCalculate.java=UTF-8
 encoding//src/main/java/hitwh/fanghh/util/RandomUtil.java=UTF-8
 encoding//src/main/java/hitwh/fanghh/util/ResponseMapUtil.java=UTF-8
+encoding//src/main/resources=UTF-8
+encoding//src/test/java=UTF-8
+encoding//src/test/resources=UTF-8
 encoding/<project>=UTF-8
