@@ -1,0 +1,55 @@
+html, body, .onePoetry_container{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.onePoetry_container{
+    background-color: rgb(252, 251, 247);
+}
+.nav_container{
+    height: 50px;
+    background-color: rgb(52, 52, 52);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.poetry_logo{
+    width: 50px;
+    height: 50px;
+    position: relative;
+    left: 60px;
+    /* margin-left: 60px; */
+}
+.nav_page_container{
+    display: inline-block;
+    position: absolute;
+    left: 110px;
+}
+.nav_span{
+    font-size: 16px;
+    color: rgb(181, 181, 181);
+    margin-left: 40px;
+    cursor: pointer;
+}
+.nav_page{
+    margin-left: 40px;
+}
+.nav_mine_container{
+    color: rgb(181, 181, 181);
+    /* margin-right: 40px; */
+}
+.nav_mine{
+    margin-right: 40px;
+}
+.nav_nowPage{
+    color: rgb(202, 176, 92);
+}
+.date_pic_container{
+    margin: 10px 0 10px 0;
+    text-align: center;
+}
+.date{
+    color: rgb(61, 61, 59);
+    font-size: 14px;
+}
