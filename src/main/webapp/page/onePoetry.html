@@ -9,7 +9,7 @@
   </head>
 
   <body>
-    <div class="onePoetry_container">
+    <div class="onePoetry_container" id="vue_moudle">
         <div class="nav_container">
             <img class="poetry_logo" src="../img/poetry_logo.png"/>
             <div class="nav_page_container">
@@ -32,11 +32,68 @@
                 <img src="../img/poetry_guyu.jpg"/>
             </div>
         </div>
+        <div class="recommend_poetry_container">
+            <div class="recommend_title_container">
+                <div class="line_left"></div>
+                <div class="recommend_title">
+                    <div class="recommend_title_content">今日荐诗</div>
+                </div>
+                <div class="line_right"></div>
+            </div>
+            <div v-for="poetry in recommendPoetryList" class="recommend_poetry">
+                <p class="recommend_poetry_title">{{poetry.title}}</p>
+                <p class="recommend_poetry_author">{{poetry.author}}</p>
+                <p class="recommend_poetry_content" v-html="poetry.content"></p>
+                <div class="line_bottom_container">
+                    <div class="line_bottom"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- <div>
     </div> -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/vue.min.js"></script>
+    <script type="text/javascript">
+        new Vue({
+            el: '#vue_moudle',
+            data: {
+                recommendPoetryList: [
+                    { 
+                        title: '钱塘湖春行' ,
+                        author: '唐代/白居易',
+                        content: '<span>乱花渐欲迷人眼，浅草才能没马蹄。</span><br/>' +
+                                 '<span>最爱湖东行不足，绿杨阴里白沙堤。</span><br/>'
+                    },
+                    { 
+                        title: '春江花月夜' ,
+                        author: '唐代/张若虚',
+                        content: '<span>春江潮水连海平，海上明月共潮生。</span><br/>' + 
+                                 '<span>滟滟随波千万里，何处春江无月明。</span><br/>'
+                    },
+                    { 
+                        title: '春雪',
+                        author: '唐代/韩愈',
+                        content: '<span>新春都未有芳华，二月初惊见草芽。</span><br/>' + 
+                                 '<span>白雪却嫌春色晚，故穿庭树作飞花。</span><br/>'
+                    },
+                    { 
+                        title: '绝句二首',
+                        author: '唐代/杜甫',
+                        content: '<span>迟日江山丽，春风花草香</span><br/>' + 
+                                 '<span>泥融飞燕子，沙暖睡鸳鸯</span><br/>'
+                    },
+                    { 
+                        title: '蝶恋花·暖风晴雨初破冻',
+                        author: '宋代/李清照',
+                        content: '<span>暖风晴雨初破冻，柳眼眉腮，已觉春心动。</span><br/>' + 
+                                 '<span>酒意诗情谁与共，泪融残粉花钿重。</span><br/>'
+                    },
+                ]
+            }
+        })
+    </script>
   </body>
 </html>
