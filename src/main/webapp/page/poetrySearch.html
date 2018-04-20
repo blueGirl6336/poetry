@@ -10,6 +10,8 @@
 
   <body>
     <div class="poetrySearch_container" id="vue_moudle">
+
+
         <div class="nav_container">
             <img class="poetry_logo" src="../img/poetry_logo.png"/>
             <div class="nav_page_container">
@@ -21,28 +23,41 @@
                 <span class="nav_span nav_mine">我的</span>
             </div>
         </div>
+
+
         <ul class="poetry_nav">
             <li class="poetry_nav_li">一首</li>
             <li class="poetry_nav_li poetry_nav_active">诗词</li>
             <li class="poetry_nav_li">与君语</li>
         </ul>
+
+
         <div class="poetry_content_container">
             <div class="search_container">
                 <div class="search_type_container" v-for="searchType in searchTypeList">
-                    <!-- <div class="search_type_title"> -->
-                        <div class="search_type_title_line"></div>
-                        <span class="search_type_title_name">{{searchType.title}}</span>
-                    <!-- </div> -->
-                    <!-- <div class="search_type_content"> -->
-                        <ul class="search_type_content_ul">
-                            <li class="search_type_content_li" v-for="content in searchType.content">{{content}}</li>
-                            <li class="search_type_content_li" style="clear: both;font-size: 0px; margin: 0px; line-height: 0px;">&nbsp;</li>
-                        </ul>
-                    <!-- </div> -->
+                    <div class="search_type_title_line"></div>
+                    <span class="search_type_title_name">{{searchType.title}}</span>
+                    <ul class="search_type_content_ul">
+                        <li class="search_type_content_li" v-for="content in searchType.content">{{content}}</li>
+                        <li class="search_type_content_li" style="clear: both;font-size: 0px; margin: 0px; line-height: 0px;">&nbsp;</li>
+                    </ul>
                 </div>
             </div>
 
-            <input />
+            <div class="search_words_container">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                <input type="text" placeholder="请输入关键词" class="search_words_input" />
+                <div class="search_words_line"></div>
+                <div class="search_words_text">搜索</div>
+            </div>
+
+            <div class="seperate_line"><span class="seperate_line_span">搜索结果：</span></div>
+
+            <div class="search_result_container" v-for="searchResult in searchResultList">
+                <div class="search_result_title" v-html="searchResult.title"></div>
+                <div class="search_result_author">{{searchResult.author}}</div>
+                <div class="search_result_content" v-html="searchResult.content"></div>
+            </div>
         </div>
     </div>
 
@@ -75,6 +90,32 @@
                                   '七夕', '中秋', '重阳', '怀古', '抒情', '爱国', '离别', '送别', '思乡', '思念', '爱情',
                                   '励志', '哲理', '闺怨', '悼亡', '写人', '老师', '母亲', '友情', '战争', '读书', '惜时',
                                   '忧民', '婉约', '豪放', '民谣']
+                    }
+                ],
+                searchResultList: [
+                    {
+                        title: '沁园春·<span class="red">雪</span>',
+                        author: '近代/毛泽东',
+                        content: '北国风光，千里冰封，万里<span class="red">雪</span>飘。<br/>' +
+                                 '望长城内外，惟余莽莽；大河上下，顿失滔滔。<br/>' + 
+                                 '山舞银蛇，原驰蜡象，欲与天公试比高。<br/>' + 
+                                 '须晴日，看红装素裹，分外妖娆。<br/>' + 
+                                 '江山如此多娇，引无数英雄竞折腰。<br/>' + 
+                                 '惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。<br/>' + 
+                                 '一代天骄，成吉思汗，只识弯弓射大雕。<br/>' + 
+                                 '俱往矣，数风流人物，还看今朝。',
+                    },
+                    {
+                        title: '江<span class="red">雪</span>',
+                        author: '唐代/柳宗元',
+                        content: '千山鸟飞绝，万径人踪灭。<br/>' +
+                                 '孤舟蓑笠翁，独钓寒江<span class="red">雪</span>。',
+                    },
+                    {
+                        title: '<span class="red">雪</span>梅·其一',
+                        author: '宋代/卢梅坡',
+                        content: '梅雪争春未肯降，骚人搁笔费评章。<br/>' +
+                                 '梅须逊<span class="red">雪</span>三分白，<span class="red">雪</span>却输梅一段香。',
                     }
                 ],
             }

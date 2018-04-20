@@ -38,8 +38,11 @@
     line-height: 20px;
 }
 .search_type_content_ul{
+    width: 750px;
     padding: 0;
     margin: 0px;
+    position: relative;
+    left: 25px;
 }
 .search_type_content_li{
     list-style: none;
@@ -47,7 +50,90 @@
     margin-right: 20px;
     line-height: 20px;
     padding: 0;
-    position: relative;
-    left: 25px;
     vertical-align: middle;
+    cursor: pointer;
+}
+
+
+.search_words_container{
+    margin-top: 40px;
+    background-color: rgb(252, 251, 247);
+    height: 40px;
+    border: 1px solid rgb(200, 199, 188);
+    /*border: 1px solid rgb(231, 230, 225);*/
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: rgb(152, 152, 150);
+    border-radius: 5px;
+    padding-left: 10px;
+}
+.glyphicon-search{
+    width: 30px;
+    height: 30px;
+    /*border: 1px solid red;*/
+    font-size: 24px;
+    font-weight: lighter;
+}
+.search_words_input{
+    border: 0px;
+    /*border: 1px solid blue;*/
+    background-color: rgb(252, 251, 247);
+    font-size: 16px;
+    width: 280px;
+    outline: none;
+}
+.search_words_line{
+    width: 2px;
+    height: 30px;
+    background-color: rgb(169, 169, 167);
+}
+.search_words_text{
+    width: 60px;
+    text-align: center;
+    color: rgb(200, 173, 92);
+    cursor: pointer;
+}
+
+.seperate_line{
+    width: 900px;
+    padding-top: 40px;
+    border-bottom: 1px solid rgb(211, 210, 205);
+    color: rgb(152, 152, 150);
+    font-size: 16px;
+}
+.seperate_line_span{
+    position: relative;
+    left: 20px;
+}
+
+
+.search_result_container{
+    width: 900px;
+    padding: 20px 0 20px 0;
+    border-bottom: 1px solid rgb(211, 210, 205);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.search_result_title{
+    font-size: 16px;
+    color: rgb(60, 58, 59);
+    padding: 5px 0 5px 0;
+}
+.search_result_author{
+    font-size: 14px;
+    color: rgb(154, 154, 154);
+    padding: 5px 0 5px 0;
+}
+.search_result_content{
+    font-size: 14px;
+    color: rgb(154, 154, 154);
+    line-height: 25px;
+    vertical-align: middle;
+}
+
+.red{
+    color: rgb(201, 0, 0);
 }
