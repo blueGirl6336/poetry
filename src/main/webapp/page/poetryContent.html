@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>My html 'login.html' starting page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/all.css">
+    <!-- <link rel="stylesheet" href="../css/onePoetry.css"> -->
+  </head>
+
+  <body>
+    <div class="onePoetry_container" id="vue_moudle">
+        <div class="nav_container">
+            <img class="poetry_logo" src="../img/poetry_logo.png"/>
+            <div class="nav_page_container">
+                <span class="nav_span nav_page nav_nowPage">诗词</span>
+                <span class="nav_span nav_page">茶社</span>
+            </div>
+            <div class="nav_mine_container">
+                <span class="nav_span nav_mine">你好,blueGirl</span>
+                <span class="nav_span nav_mine">我的</span>
+            </div>
+        </div>
+        <ul class="poetry_nav">
+            <li class="poetry_nav_li">一首</li>
+            <li class="poetry_nav_li poetry_nav_active">诗词</li>
+            <li class="poetry_nav_li">与君语</li>
+        </ul>
+
+    </div>
+
+    <!-- <div>
+    </div> -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/vue.min.js"></script>
+    <script type="text/javascript">
+        new Vue({
+            el: '#vue_moudle',
+            data: {
+            }
+        })
+    </script>
+  </body>
+</html>
