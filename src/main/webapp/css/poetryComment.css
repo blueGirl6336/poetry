@@ -1,0 +1,71 @@
+.poetryComment_container{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(252, 251, 247);
+    overflow: scroll;
+    padding-bottom: 20px;
+}
+.poetry_comment_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.comment_container{
+    padding-bottom: 20px;
+    width: 1000px;
+    border-bottom: 1px solid rgb(211, 210, 205);
+}
+
+.comment_title{
+    padding: 20px 0 20px 0;
+}
+.comment_img{
+    width: 35px;
+    height: 35px;
+    margin-left: 50px;
+    border: 0px;
+    border-radius: 17px;
+}
+.comment_name{
+    position: relative;
+    left: 30px;
+    color: rgb(57, 57, 57);
+    font-size: 16px;
+}
+.comment_time{
+    float: right;
+    color: rgb(155, 154, 152);
+    font-size: 14px;
+    margin-right: 50px;
+}
+
+.comment_content{
+    clear: both;
+    padding: 10px 115px 10px 115px;
+    line-height: 20px;
+    vertical-align: middle;
+    color: rgb(126, 128, 127);
+    font-size: 16px;
+}
+
+.comment_bottom{
+    padding: 20px 0 20px 0;
+}
+.comment_from{
+    margin-left: 115px;
+    font-size: 14px;
+    color: rgb(196, 172, 100);
+    line-height: 20px;
+    vertical-align: middle;
+}
+.comment_situation_container{
+    float: right;
+    font-size: 16px;
+    color: rgb(152, 152, 152);
+    line-height: 20px;
+    vertical-align: middle;
+    margin-right: 50px;
+}

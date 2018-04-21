@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>poetryContent</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../css/poetryComment.css">
+  </head>
+
+  <body>
+    <div class="poetryComment_container" id="vue_moudle">
+        <div class="nav_container">
+            <img class="poetry_logo" src="../img/poetry_logo.png"/>
+            <div class="nav_page_container">
+                <span class="nav_span nav_page nav_nowPage">诗词</span>
+                <span class="nav_span nav_page">茶社</span>
+            </div>
+            <div class="nav_mine_container">
+                <span class="nav_span nav_mine">你好,blueGirl</span>
+                <span class="nav_span nav_mine">我的</span>
+            </div>
+        </div>
+        <ul class="poetry_nav">
+            <li class="poetry_nav_li">一首</li>
+            <li class="poetry_nav_li">诗词</li>
+            <li class="poetry_nav_li poetry_nav_active">与君语</li>
+        </ul>
+
+        <div class="poetry_comment_container">
+            <div class="comment_container" v-for="commentContent in commentContentList">
+                <div class="comment_title">
+                    <img class="comment_img" :src="commentContent.imgSrc">
+                    <span class="comment_name">{{commentContent.name}}</span>
+                    <span class="comment_time">{{commentContent.time}}</span>
+                </div>
+                <p class="comment_content" v-html="commentContent.content"></p>
+                <div class="comment_bottom">
+                    <span class="comment_from">来自《{{commentContent.from}}》</span>
+                    <div class="comment_situation_container">
+                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                        <span class="comment_like_num">&ensp;{{commentContent.likeNum}}&ensp;&ensp;&ensp;</span>
+                        <span class="glyphicon glyphicon-edit"></span>
+                        <span class="comment_like_num">&ensp;{{commentContent.likeNum}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- <div>
+    </div> -->
+    <script src="../js/jquery.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/vue.min.js"></script>
+    <script type="text/javascript">
+        new Vue({
+            el: '#vue_moudle',
+            data: {
+                commentContentList: [
+                    {
+                        imgSrc: '../img/user_img1.jpeg',
+                        name: '若现',
+                        time: '17分钟前',
+                        content: '春未老，然念想老了<br/>' + 
+                                 '春又老，这念想便又老了一分',
+                        from: '谒金门·春又老',
+                        likeNum: 4,
+                        replyNum: 0,
+                    },
+                    {
+                        imgSrc: '../img/user_img2.jpg',
+                        name: '雨眠',
+                        time: '21分钟前',
+                        content: '之子于归，远送于野<br/>' +
+                                 '我送你，执着地远至天涯海角，执着地远至我能及的最远，剩下的路，无奈我不能陪你走下去，无奈还是要分离。' + 
+                                 '我能陪你到明天，但不能陪你到永远。' + 
+                                 '之子于归，远送于野。' + 
+                                 '瞻望弗及，泣涕如雨。' + 
+                                 '时光里的分别，大抵亦是如此。',
+                        from: '咏柳/柳枝词',
+                        likeNum: 1,
+                        replyNum: 0,
+                    },
+                    {
+                        imgSrc: '../img/user_img3.jpg',
+                        name: 'hero',
+                        time: '30分钟前',
+                        content: '晚来天欲雪<br/>' + 
+                                 '能饮一杯无<br/><br/>' + 
+                                 '莫名难过呢？',
+                        from: '问刘十九',
+                        likeNum: 0,
+                        replyNum: 1,
+                    },
+                    {
+                        imgSrc: '../img/user_img4.jpeg',
+                        name: '雨眠',
+                        time: '21分钟前',
+                        content: '君不闻，霜雪吹满头，也算是白首',
+                        from: '咏柳/柳枝词',
+                        likeNum: 6,
+                        replyNum: 3,
+                    },
+                    {
+                        imgSrc: '../img/user_img5.jpg',
+                        name: '雨眠',
+                        time: '21分钟前',
+                        content: '苏轼的《江城子·密州出猎》也有句“老夫聊发少年狂”。算是引用？',
+                        from: '咏柳/柳枝词',
+                        likeNum: 1,
+                        replyNum: 0,
+                    },
+                ],                
+            }
+        })
+    </script>
+  </body>
+</html>

@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <title>My html 'login.html' starting page</title>
+    <title>poetryContent</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/all.css">
-    <!-- <link rel="stylesheet" href="../css/onePoetry.css"> -->
+    <link rel="stylesheet" href="../css/poetryContent.css">
   </head>
 
   <body>
-    <div class="onePoetry_container" id="vue_moudle">
+    <div class="poetryContent_container" id="vue_moudle">
         <div class="nav_container">
             <img class="poetry_logo" src="../img/poetry_logo.png"/>
             <div class="nav_page_container">
@@ -27,17 +27,66 @@
             <li class="poetry_nav_li">与君语</li>
         </ul>
 
+        <div class="poetry_container">
+            <div class="left_outline_container">
+                <p class="left_outline_link" v-for="leftOutline in leftOutlineList">{{leftOutline.name}}</p>
+            </div>
+            <div class="poetry_analysis_container">
+                <div class="poetry_analysis_moudle_container">
+                    
+                </div>
+            </div>
+            <div class="right_outline_container">
+                <p class="right_outline_link" 
+                   v-for="rightOutline in rightOutlineList">
+                   {{rightOutline.name}}
+                   &ensp;
+                   <span :class="rightOutline.iconSrc"></span>
+                </p>
+            </div>
+        </div>
+
     </div>
 
     <!-- <div>
     </div> -->
-    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="../js/jquery.js"></script>
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <script src="../js/vue.min.js"></script>
     <script type="text/javascript">
         new Vue({
             el: '#vue_moudle',
             data: {
+                leftOutlineList: [
+                    {
+                        name: '正文',
+                    },
+                    {
+                        name: '注释',
+                    },
+                    {
+                        name: '译文',
+                    },
+                    {
+                        name: '赏析',
+                    },
+                    {
+                        name: '作者',
+                    },
+                    {
+                        name: '评论',
+                    },
+                ],
+                rightOutlineList: [
+                    {
+                        name: '收藏',
+                        iconSrc: 'glyphicon glyphicon-heart-empty',
+                    },
+                    {
+                        name: '下载',
+                        iconSrc: 'glyphicon glyphicon-save',
+                    }
+                ],
             }
         })
     </script>
