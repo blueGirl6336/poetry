@@ -31,13 +31,27 @@
             <div class="left_outline_container">
                 <p class="left_outline_link" v-for="leftOutline in leftOutlineList">{{leftOutline.name}}</p>
             </div>
+
             <div class="poetry_analysis_container">
-                <div class="poetry_analysis_moudle_container">
-                    
+                <div class="original_text_container" id="originalText">
+                    <p class="moudle_name">正文</p>
+                    <div class="moudle_text_content">
+                        <p class="poetry_title">{{poetryTitle}}</p>
+                        <p class="poetry_author">[{{poetryAuthorDynasty}}]{{poetryAuthor}}</p>
+                        <p class="poetry_content" v-html="poetryContent"></p>
+                    </div>
+                </div>
+
+                <div class="poetry_analysis_moudle_container"
+                     v-for="poetryAnalysis in poetryAnalysisList"
+                     :id="poetryAnalysis.moudleId">
+                    <p class="moudle_name">{{poetryAnalysis.moudleName}}</p>
+                    <div class="moudle_content" v-html="poetryAnalysis.moudleContent"></div>
                 </div>
             </div>
+
             <div class="right_outline_container">
-                <p class="right_outline_link" 
+                <p class="right_outline_link"
                    v-for="rightOutline in rightOutlineList">
                    {{rightOutline.name}}
                    &ensp;
@@ -53,42 +67,7 @@
     <script src="../js/jquery.js"></script>
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <script src="../js/vue.min.js"></script>
-    <script type="text/javascript">
-        new Vue({
-            el: '#vue_moudle',
-            data: {
-                leftOutlineList: [
-                    {
-                        name: '正文',
-                    },
-                    {
-                        name: '注释',
-                    },
-                    {
-                        name: '译文',
-                    },
-                    {
-                        name: '赏析',
-                    },
-                    {
-                        name: '作者',
-                    },
-                    {
-                        name: '评论',
-                    },
-                ],
-                rightOutlineList: [
-                    {
-                        name: '收藏',
-                        iconSrc: 'glyphicon glyphicon-heart-empty',
-                    },
-                    {
-                        name: '下载',
-                        iconSrc: 'glyphicon glyphicon-save',
-                    }
-                ],
-            }
-        })
-    </script>
+    <script src="../js/poetryContent.js"></script>
+
   </body>
 </html>

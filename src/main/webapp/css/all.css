@@ -17,6 +17,7 @@ html, body{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    z-index: 100;
 }
 .poetry_logo{
     width: 50px;
