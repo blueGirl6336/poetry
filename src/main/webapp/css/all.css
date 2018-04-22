@@ -73,3 +73,8 @@ html, body{
     color: rgb(60, 58, 59);
     border-bottom: 3px solid rgb(205, 174, 81);
 }
+
+a:link {text-decoration: none; color: rgb(181, 181, 181);} /* 未访问的链接 */
+a:visited {text-decoration: none; color: rgb(181, 181, 181);} /* 已访问的链接 */
+a:hover {text-decoration: none; color: rgb(181, 181, 181);} /* 当有鼠标悬停在链接上 */
+a:active {text-decoration: none; color: rgb(181, 181, 181);} /* 被选择的链接 */

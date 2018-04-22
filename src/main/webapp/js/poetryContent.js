@@ -4,21 +4,27 @@ new Vue({
         leftOutlineList: [
             {
                 name: '正文',
+                aHref: '#originalText',
             },
             {
                 name: '注释',
+                aHref: '#detail',
             },
             {
                 name: '译文',
+                aHref: '#translation',
             },
             {
                 name: '赏析',
+                aHref: '#appreciation',
             },
             {
                 name: '作者',
+                aHref: '#author',
             },
             {
                 name: '评论',
+                aHref: '#comment_moudle_container',
             },
         ],
         rightOutlineList: [
@@ -123,6 +129,42 @@ new Vue({
                                '同年12月，同周恩来等促使西安事变和平解决，这成为由内战到第二次国共合作、共同抗日的时局转换的枢纽。1936年12月，写《中国革命战争的战略问题》。1937年夏，写《实践论》和《矛盾论》。',
 
             }
+        ],
+        commentList: [
+            {
+                imgSrc: '../img/user_img1.jpeg',
+                author: '不动声色',
+                content: '当年毛主席正借此诗聊表壮志，他或许就已经意识到了，他已经站在了古往今来中国人的巅峰' + 
+                         '可以以同等高度的视角来品评秦皇汉武唐宗宋祖，这是一种多么广阔和伟大的情怀',
+                time: '2018-04-06 21:11',
+                likeNum: 4,
+                replyNum: 0,
+            },
+            {
+                imgSrc: '../img/user_img2.jpg',
+                author: '至三人禾',
+                content: '祖国风光，宏伟壮丽，望山河大地，红旗飘摇，世界各国，各领风骚，' + 
+                         '待几时，独占枝头，一比高低，祖国如此多娇',
+                time: '',
+                likeNum: 4,
+                replyNum: 0,
+            },
+            {
+                imgSrc: '../img/user_img3.jpg',
+                author: '君卿',
+                content: '气势磅礴，豪情万丈',
+                time: '',
+                likeNum: 4,
+                replyNum: 0,
+            },
+            {
+                imgSrc: '../img/user_img4.jpeg',
+                author: '晓风残月',
+                content: '寥寥几笔，描绘出看似普通却意义重大的雪景，完全表达了一种想统一全国的雄心壮志！',
+                time: '',
+                likeNum: 4,
+                replyNum: 0,
+            },
         ],
     }
 })

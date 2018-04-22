@@ -29,7 +29,7 @@
 
         <div class="poetry_container">
             <div class="left_outline_container">
-                <p class="left_outline_link" v-for="leftOutline in leftOutlineList">{{leftOutline.name}}</p>
+                <p class="left_outline_link" v-for="leftOutline in leftOutlineList"><a :href="leftOutline.aHref">{{leftOutline.name}}</a></p>
             </div>
 
             <div class="poetry_analysis_container">
@@ -57,6 +57,25 @@
                    &ensp;
                    <span :class="rightOutline.iconSrc"></span>
                 </p>
+            </div>
+
+            <div class="comment_moudle_container" id="comment_moudle_container">
+                <p class="comment_moudle_title">评论</p>
+
+                <div class="comment_container" v-for="comment in commentList">
+                    <div class="commment_title">
+                        <img :src="comment.imgSrc" class="comment_img">
+                        <span class="comment_author">{{comment.author}}：</span>
+                    </div>
+                    <p class="comment_content">{{comment.content}}</p>
+                    <div class="comment_bottom">
+                        <span class="comment_time">{{comment.time}}</span>
+                        <span class="glyphicon glyphicon-heart-empty"></span>
+                        <span class="comment_like_num">&ensp;{{comment.likeNum}}&ensp;&ensp;&ensp;</span>
+                        <span class="glyphicon glyphicon-edit"></span>
+                        <span class="comment_reply_num">&ensp;{{comment.replyNum}}</span>
+                    </div>
+                </div>
             </div>
         </div>
 
