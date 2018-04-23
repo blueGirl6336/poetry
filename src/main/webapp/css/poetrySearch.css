@@ -121,6 +121,7 @@
     font-size: 16px;
     color: rgb(60, 58, 59);
     padding: 5px 0 5px 0;
+    cursor: pointer;
 }
 .search_result_author{
     font-size: 14px;
