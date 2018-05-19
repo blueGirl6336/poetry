@@ -17,7 +17,7 @@
                 <span class="nav_span nav_page" onclick="window.location.href='oneTea.html'">茶社</span>
             </div>
             <div class="nav_mine_container">
-                <span class="nav_span nav_mine">你好,blueGirl</span>
+                <span class="nav_span nav_mine">你好,{{userName}}</span>
                 <span class="nav_span nav_mine">我的</span>
             </div>
         </div>
@@ -58,6 +58,7 @@
         new Vue({
             el: '#vue_moudle',
             data: {
+                userName: '',
                 commentContentList: [
                     {
                         imgSrc: '../img/user_img1.jpeg',
@@ -113,6 +114,20 @@
                         replyNum: 0,
                     },
                 ],                
+            },
+            mounted: function () {
+                this.$nextTick(function () {
+                    console.log("document.cookie: " + document.cookie);
+                    var arrCookie = document.cookie.replace(/[ ]/g,"").split(";");
+                    for(var i = 0;i < arrCookie.length; i++){
+                        console.log(arrCookie[i]);   
+                        var arr = arrCookie[i].split("="); 
+                        if(arr[0] == "userName"){
+                            this.userName = arr[1];
+                            break;
+                        }
+                    }
+                })
             }
         })
     </script>

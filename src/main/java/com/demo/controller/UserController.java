@@ -37,13 +37,29 @@ public class UserController
 	public Map<String, Object> loginWithUserName(@RequestParam String userName, @RequestParam String password)
 	{
 		UserBean userBean = userService.loginWithUserName(userName, password);
+		System.out.println("enter map controller  " );
 		switch (userBean.getLoginResult())
 		{
 		case 0:
 			return ResponseMapUtil.responseError("用户名/密码错误！");
-		case 1:
+		case 1: return ResponseMapUtil.responseSuccess(userBean);
 		default:
 			return ResponseMapUtil.responseError("未知登录错误！");
+		}
+	}
+	
+	@RequestMapping("/register")
+	@ResponseBody
+	public Map<String, Object> register(@RequestParam String userName, @RequestParam String password)
+	{
+		int registerResult = userService.register(userName, password);
+		switch(registerResult){
+			case 0:
+				return ResponseMapUtil.responseError("注册失败！");
+			case 1:
+				return ResponseMapUtil.responseSuccess("注册成功");
+			default:
+				return ResponseMapUtil.responseError("未知注册错误！");
 		}
 	}
 

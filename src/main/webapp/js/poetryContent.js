@@ -1,6 +1,7 @@
 new Vue({
     el: '#vue_moudle',
     data: {
+        userName: '',
         leftOutlineList: [
             {
                 name: '正文',
@@ -166,5 +167,19 @@ new Vue({
                 replyNum: 0,
             },
         ],
+    },
+    mounted: function () {
+        this.$nextTick(function () {
+            console.log("document.cookie: " + document.cookie);
+            var arrCookie = document.cookie.replace(/[ ]/g,"").split(";");
+            for(var i = 0;i < arrCookie.length; i++){
+                console.log(arrCookie[i]);   
+                var arr = arrCookie[i].split("="); 
+                if(arr[0] == "userName"){
+                    this.userName = arr[1];
+                    break;
+                }
+            }
+        })
     }
 })

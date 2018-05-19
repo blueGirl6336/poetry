@@ -39,4 +39,6 @@ public interface UserService{
 	 * @return
 	 */
 	public UserBean loginWithUserName(String userName, String password);
+	
+	public int register(String userName, String password);
 }

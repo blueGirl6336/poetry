@@ -30,13 +30,15 @@ public class LoginManager
 	 */
 	public int userRegister(int id)
 	{
+		System.out.println("enter manager userRegister  ");
 		StringBuffer stringBuffer = new StringBuffer("token");
-		stringBuffer.append(id);
+		stringBuffer.append(String.valueOf(id));
 		stringBuffer.append(String.valueOf(System.currentTimeMillis()));
 		String token = null;
 		try
 		{
 			token = Md5Util.encrypt(stringBuffer.toString());
+			System.out.println("token  " + token);
 		} catch (NoSuchAlgorithmException e)
 		{
 			e.printStackTrace();
@@ -45,6 +47,8 @@ public class LoginManager
 		session.setAttribute("token", token);
 		session.setAttribute("userId", id);
 		loginMap.put(String.valueOf(id), token);
+		System.out.println("session.token:  " + session.getAttribute("token"));
+		System.out.println("session.id  " + session.getAttribute("userId"));
 		return 1;
 	}
 
