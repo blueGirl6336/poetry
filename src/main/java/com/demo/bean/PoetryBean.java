@@ -21,6 +21,8 @@ public class PoetryBean {
 	private String congshu;
 	//诗词摘要
 	private String zhaiyao;
+	//诗词出处
+	private String chuchu;
 	//诗词原文
 	private String yuanwen;
 	//原文朗读
@@ -80,6 +82,13 @@ public class PoetryBean {
 	}
 	public void setCongshu(String congshu) {
 		this.congshu = congshu;
+	}
+	
+	public String getChuchu() {
+		return chuchu;
+	}
+	public void setChuchu(String chuchu) {
+		this.chuchu = chuchu;
 	}
 	
 	public String getZhaiyao() {

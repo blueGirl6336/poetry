@@ -62,18 +62,57 @@
             <div class="comment_moudle_container" id="comment_moudle_container">
                 <p class="comment_moudle_title">评论</p>
 
-                <div class="comment_container" v-for="comment in commentList">
+                <div class="comment_container" v-for="(comment, index) in commentList"
+                     v-if="commentShow">
                     <div class="commment_title">
                         <img :src="comment.imgSrc" class="comment_img">
-                        <span class="comment_author">{{comment.author}}：</span>
+                        <span class="comment_author">{{comment.commentUserName}}：</span>
                     </div>
-                    <p class="comment_content">{{comment.content}}</p>
+                    <p class="comment_content" v-html="comment.commentContent"></p>
                     <div class="comment_bottom">
-                        <span class="comment_time">{{comment.time}}&ensp;&ensp;&ensp;&ensp;</span>
-                        <span class="glyphicon glyphicon-heart-empty"></span>
-                        <span class="comment_like_num">&ensp;{{comment.likeNum}}&ensp;&ensp;&ensp;</span>
-                        <span class="glyphicon glyphicon-edit"></span>
+                        <span class="comment_time">{{comment.commentDateTime}}&ensp;&ensp;&ensp;&ensp;</span>
+                        <span class="glyphicon glyphicon-heart-empty" v-if="comment.notLike"
+                              @click="clickLikeIcon(index, comment.commentId)"></span>
+                        <span class="glyphicon glyphicon-heart" v-else></span>
+                        <span class="comment_like_num">&ensp;{{comment.commentLikeNum}}&ensp;&ensp;&ensp;</span>
+                        <span class="glyphicon glyphicon-edit" @click="clickReplyIcon(index)"></span>
                         <span class="comment_reply_num">&ensp;{{comment.replyNum}}</span>
+                    </div>
+                    <div class="reply_container" v-if="comment.replyShow">
+                        <div class="reply" v-for="(reply, replyIndex) in comment.replyBeanList">
+                            <div class="reply_top_container">
+                                <span>{{reply.fromUserName}}</span>
+                                <div>
+                                    <span class="glyphicon glyphicon-heart-empty" v-if="reply.notLike"
+                                          @click="clickReplyLikeIcon(index, replyIndex, reply.replyId)"></span>
+                                    <span class="glyphicon glyphicon-heart" v-else></span>
+                                    <span class="reply_like_num">&ensp;{{reply.replyLikeNum}}&ensp;&ensp;&ensp;</span>
+                                </div>
+                            </div>
+                            <p class="reply_content" v-html="reply.replyContent"></p>
+                        </div>
+
+                        <div class="reply" v-if="comment.addReplyShow">
+                            <textarea class="insert_reply_content" placeholder="请输入您的回复"
+                                      v-model="replyContent">
+                            </textarea>
+                            <div>
+                                <input class="insert_reply_button" type="button" value="确认回复"
+                                       @click="insertReply(comment.commentId, comment.commentUId)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p v-else>暂无</p>
+
+                <div class="insert_comment_container">
+                    <textarea class="insert_comment_content" placeholder="请输入您的评论"
+                              v-model="commentContent">
+                    </textarea>
+                    <div>
+                        <input class="insert_comment_button" type="button" value="发布评论"
+                        @click="insertComment"/>
                     </div>
                 </div>
             </div>

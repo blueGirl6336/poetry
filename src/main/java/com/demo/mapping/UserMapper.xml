@@ -14,8 +14,8 @@
   	</sql>
   	
   	<!--根据用户id查询用户 -->
-	<select id="queryUserById" parameterType="int" resultMap="UserResultMap">
-		select user_id,user_name from user_table where user_id=#{user_id}
+	<select id="queryUserNameById" parameterType="java.lang.Integer" resultType="java.lang.String">
+		select user_name from user_table where user_id = #{userId}
 	</select>
 	
 	<!--新增用户 -->

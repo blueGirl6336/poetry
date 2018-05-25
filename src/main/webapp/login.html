@@ -108,6 +108,7 @@
                     document.cookie = key + "=" + val +";expires=" + date.toGMTString();  //设置cookie
                 },
                 login: function () {
+                        var that = this;
                         this.$options.methods.set_cookie("userName", this.userName, 0.5);
                         $.ajax({
                             url:"user/loginWithUserName",
@@ -121,6 +122,7 @@
                             {
                                 if(data.success == true){
                                     console.log("document.cookie: " + document.cookie);
+                                    that.$options.methods.set_cookie("userId", data.data.userId, 0.5);
                                     window.location.href = "page/onePoetry.html";
                                 }else{
                                     alert("登录失败，请检查用户名密码后重新登录");

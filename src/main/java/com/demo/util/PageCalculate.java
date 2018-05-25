@@ -5,8 +5,6 @@ package com.demo.util;
  *
  * @ClassName: PageCalculate
  * @Description: TODO
- * @author: ZY
- * @date: 2016年11月16日 下午6:34:33
  *
  */
 public class PageCalculate
@@ -17,8 +15,6 @@ public class PageCalculate
 
 	/**
 	 * init
-	 * 
-	 * @author: ZY
 	 *
 	 * @param pageNum页的总数
 	 * @param pageMaxNum每页最大数量
@@ -52,8 +48,6 @@ public class PageCalculate
 	 * 获取数据库对应的最小序号
 	 *
 	 * @Title: getMin
-	 * @version:
-	 * @author: ZY
 	 * 
 	 * @param pageNo
 	 * @return
@@ -75,8 +69,6 @@ public class PageCalculate
 	 * 获取数据库对应的最小序号
 	 *
 	 * @Title: getMin
-	 * @version:
-	 * @author: ZY
 	 * 
 	 * @return
 	 */
@@ -97,8 +89,6 @@ public class PageCalculate
 	 * 获取数据库对应的最大序号
 	 *
 	 * @Title: getMax
-	 * @version:
-	 * @author: ZY
 	 * 
 	 * @param pageNo
 	 * @return
@@ -120,8 +110,6 @@ public class PageCalculate
 	 * 获取数据库对应的最大序号
 	 *
 	 * @Title: getMax
-	 * @version:
-	 * @author: ZY
 	 * 
 	 * @return
 	 */

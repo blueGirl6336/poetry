@@ -12,7 +12,7 @@ public interface UserDao {
 	 * @param userId
 	 * @return
 	 */
-	public User queryUserById(int userId);
+	public String queryUserNameById(int userId);
 	
 	/**
 	 * 新增用户

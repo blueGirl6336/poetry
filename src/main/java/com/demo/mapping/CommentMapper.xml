@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.demo.dao.CommentDao">
+	<resultMap id="CommentResultMap" type="com.demo.pojo.Comment">
+	    <id column="comment_id" jdbcType="INTEGER" property="commentId" />
+	    <result column="poetry_id" jdbcType="INTEGER" property="poetryId" />
+	    <result column="comment_uid" jdbcType="INTEGER" property="commentUId" />
+	    <result column="comment_content" jdbcType="VARCHAR" property="commentContent" />
+	    <result column="comment_dateTime" jdbcType="VARCHAR" property="commentDateTime" />
+	    <result column="comment_likeNum" jdbcType="INTEGER" property="commentLikeNum" />
+	</resultMap>
+	
+	<sql id="Comment_Column_List">
+    	comment_id, poetry_id, comment_uid, comment_content, comment_dateTime, comment_likeNum
+  	</sql>
+  	
+  	<!--根据诗词id查找评论 -->
+	<select id="queryCommentByPoetryId" parameterType="java.lang.Integer" resultMap="CommentResultMap">
+		select 
+		<include refid="Comment_Column_List" />
+		from comment_table
+		<where>
+            poetry_id = #{poetryId}
+    	</where>
+	</select>
+	
+	
+	<!--新增评论 -->
+    <insert id="insertComment" parameterType="com.demo.pojo.Comment">
+        insert into comment_table(comment_id, poetry_id, comment_uid, comment_content, comment_dateTime, comment_likeNum) 
+        values(#{commentId}, #{poetryId}, #{commentUId}, #{commentContent}, #{commentDateTime}, #{commentLikeNum});
+    </insert>
+    
+    <!--新增点赞数 -->
+    <insert id="addCommentLikeNum" parameterType="java.lang.Integer">
+    	update comment_table 
+    	set comment_likeNum = comment_likeNum + 1 
+    	where comment_id = #{commentId};
+    </insert>
+	
+</mapper>

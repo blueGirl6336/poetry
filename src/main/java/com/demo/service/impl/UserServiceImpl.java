@@ -49,14 +49,6 @@ public class UserServiceImpl implements UserService{
 				userBean.setUserName(user.getUserName());
 				userBean.setLoginResult(res);
 				
-
-
-				//HttpServletRequest request;
-//				HttpServletResponse response = null;
-//				Cookie cookieUserId = new Cookie("userId",String.valueOf(user.getUserId()));
-//				Cookie cookieUserName = new Cookie("userName", userName);
-//				response.addCookie(cookieUserId);
-//				response.addCookie(cookieUserName);
 			}
 		}
 		return userBean;

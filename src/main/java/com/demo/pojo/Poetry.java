@@ -4,7 +4,7 @@ package com.demo.pojo;
 
 public class Poetry {
 	//诗词id
-	private int id;
+	private int _id;
 	//诗词名称
 	private String mingcheng;
 	//作者
@@ -27,16 +27,18 @@ public class Poetry {
 	private String congshu;
 	//诗词摘要
 	private String zhaiyao;
+	//诗词出处
+	private String chuchu;
 	//诗词原文
 	private String yuanwen;
 	//原文朗读
 	private int voice;
 
-	public int getId() {
-		return id;
+	public int get_Id() {
+		return _id;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void set_Id(int _id) {
+		this._id = _id;
 	}
 	
 	public String getMingcheng() {
@@ -107,6 +109,13 @@ public class Poetry {
 	}
 	public void setCongshu(String congshu) {
 		this.congshu = congshu;
+	}
+	
+	public String getChuchu() {
+		return chuchu;
+	}
+	public void setChuchu(String chuchu) {
+		this.chuchu = chuchu;
 	}
 	
 	public String getZhaiyao() {

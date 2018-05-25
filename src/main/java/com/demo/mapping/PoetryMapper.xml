@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.demo.dao.PoetryDao">
+	<resultMap id="PoetryResultMap" type="com.demo.pojo.Poetry">
+	    <id column="_id" jdbcType="INTEGER" property="_id" />
+	    <result column="mingcheng" jdbcType="LONGVARCHAR" property="mingcheng" />
+	    <result column="zuozhe" jdbcType="LONGVARCHAR" property="zuozhe" />
+	    <result column="shipin" jdbcType="INTEGER" property="shipin" />
+	    <result column="ticai" jdbcType="LONGVARCHAR" property="ticai" />
+	    <result column="chaodai" jdbcType="LONGVARCHAR" property="chaodai" />
+	    <result column="guojia" jdbcType="LONGVARCHAR" property="guojia" />
+	    <result column="fenlei" jdbcType="LONGVARCHAR" property="fenlei" />
+	    <result column="jieduan" jdbcType="LONGVARCHAR" property="jieduan" />
+	    <result column="keben" jdbcType="LONGVARCHAR" property="keben" />
+	    <result column="congshu" jdbcType="LONGVARCHAR" property="congshu" />
+	    <result column="chuchu" jdbcType="LONGVARCHAR" property="chuchu" />
+	    <result column="zhaiyao" jdbcType="LONGVARCHAR" property="zhaiyao" />
+	    <result column="yuanwen" jdbcType="LONGVARCHAR" property="yuanwen" />
+	    <result column="voice" jdbcType="INTEGER" property="voice" />
+	</resultMap>
+	
+	<sql id="Poetry_Column_List">
+    	_id, mingcheng, zuozhe, shipin, ticai, chaodai, guojia, fenlei, jieduan, keben, congshu, chuchu, zhaiyao, yuanwen, voice
+  	</sql>
+  	
+  	<!--根据朝代名称查找诗词 -->
+	<select id="queryPoetryByChaodai" parameterType="java.lang.String" resultMap="PoetryResultMap">
+		select _id, mingcheng, zuozhe, shipin, chaodai, fenlei, congshu, chuchu, zhaiyao, yuanwen from poem 
+		<where>
+            chaodai like CONCAT('%', #{chaodai} , '%')
+    	</where>
+	</select>
+	<!-- 获取朝代名称诗词数 -->
+	<select id="countPoetryByChaodai" parameterType="java.lang.String" resultType="java.lang.Integer">
+	    select 
+	    count(*)
+	    from poem
+	    where chaodai like CONCAT('%', #{chaodai} , '%')
+  	</select>
+	
+	<!--根据作者名称查找诗词 -->
+	<select id="queryPoetryByZuozhe" parameterType="java.lang.String" resultMap="PoetryResultMap">
+		select _id, mingcheng, zuozhe, shipin, chaodai, fenlei, congshu, chuchu, zhaiyao, yuanwen from poem 
+		<where>
+            zuozhe like CONCAT('%', #{zuozhe} , '%')
+    	</where>
+	</select>
+	<!-- 获取作者名称诗词数 -->
+	<select id="countPoetryByZuozhe" parameterType="java.lang.String" resultType="java.lang.Integer">
+	    select 
+	    count(*)
+	    from poem
+	    where zuozhe like CONCAT('%', #{zuozhe} , '%')
+  	</select>
+  	
+  	<!--根据分类名称查找诗词 -->
+	<select id="queryPoetryByFenlei" parameterType="java.lang.String" resultMap="PoetryResultMap">
+		select _id, mingcheng, zuozhe, shipin, chaodai, fenlei, congshu, chuchu, zhaiyao, yuanwen from poem 
+		<where>
+            fenlei like CONCAT('%', #{fenlei} , '%')
+    	</where>
+	</select>
+	<!-- 获取分类名称诗词数 -->
+	<select id="countPoetryByFenlei" parameterType="java.lang.String" resultType="java.lang.Integer">
+	    select 
+	    count(*)
+	    from poem
+	    where fenlei like CONCAT('%', #{fenlei} , '%')
+  	</select>
+  	
+  	<!--根据输入文字查找诗词 -->
+	<select id="queryPoetryByInput" parameterType="java.lang.String" resultMap="PoetryResultMap">
+		select _id, mingcheng, zuozhe, shipin, chaodai, fenlei, congshu, chuchu, zhaiyao, yuanwen from poem 
+		<where>
+            yuanwen like CONCAT('%', #{yuanwen} , '%')
+    	</where>
+	</select>
+	<!-- 获取输入文字诗词数 -->
+	<select id="countPoetryByInput" parameterType="java.lang.String" resultType="java.lang.Integer">
+	    select 
+	    count(*)
+	    from poem
+	    where yuanwen like CONCAT('%', #{yuanwen} , '%')
+  	</select>
+  	
+  	
+  	<!--根据诗词id查找诗词 -->
+	<select id="queryPoetryById" parameterType="java.lang.Integer" resultMap="PoetryResultMap">
+		select _id, mingcheng, zuozhe, shipin, chaodai, fenlei, congshu, chuchu, zhaiyao, yuanwen from poem 
+		where _id = #{_id}
+	</select>
+	
+	<!--根据诗词id查找注解 -->
+	<select id="queryZhujieById" parameterType="java.lang.Integer" resultType="java.lang.String">
+		select content from zhujie 
+		where _id = #{_id}
+	</select>
+	
+	<!--根据诗词id查找译文 -->
+	<select id="queryYiwenById" parameterType="java.lang.Integer" resultType="java.lang.String">
+		select content from yiwen 
+		where _id = #{_id,jdbcType=INTEGER}
+	</select>
+  	
+  	<!--根据诗词id查找赏析 -->
+	<select id="queryShangxiById" parameterType="java.lang.Integer" resultType="java.lang.String">
+		select content from shangxi 
+		where _id = #{_id,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据诗词id查找作者 -->
+	<select id="queryAuthorById" parameterType="java.lang.String" resultType="java.lang.String">
+		select jieshao from author 
+		where xingming = #{author,jdbcType=LONGVARCHAR}
+	</select>
+	
+	<!--新增用户 -->
+    <!-- insert id="insertUser" parameterType="com.demo.pojo.User">
+        insert into user_table(user_name,user_password) 
+        values(#{userName},#{password});
+    </insert -->
+	
+</mapper>

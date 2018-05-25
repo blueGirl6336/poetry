@@ -6,6 +6,12 @@
 	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/all.css">
     <link rel="stylesheet" href="../css/poetrySearch.css">
+    <!-- 引入element ui样式 -->
+    <!-- <link rel="stylesheet" href="../elementUI/elementUI.css"> -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入element ui组件库 -->
+    <!-- <script src="../elementUI/elementUI.js"></script> -->
+    <!-- <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
   </head>
 
   <body>
@@ -34,11 +40,12 @@
 
         <div class="poetry_content_container">
             <div class="search_container">
-                <div class="search_type_container" v-for="searchType in searchTypeList">
+                <div class="search_type_container" v-for="leixing in leixingList">
                     <div class="search_type_title_line"></div>
-                    <span class="search_type_title_name">{{searchType.title}}</span>
+                    <span class="search_type_title_name">{{leixing.title}}</span>
                     <ul class="search_type_content_ul">
-                        <li class="search_type_content_li" v-for="content in searchType.content">{{content}}</li>
+                        <li class="search_type_content_li" v-for="content in leixing.content"
+                            @click="searchByLeixingming(leixing.leixingming, content)">{{content}}</li>
                         <li class="search_type_content_li" style="clear: both;font-size: 0px; margin: 0px; line-height: 0px;">&nbsp;</li>
                     </ul>
                 </div>
@@ -46,17 +53,27 @@
 
             <div class="search_words_container">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                <input type="text" placeholder="请输入关键词" class="search_words_input" />
+                <input type="text" placeholder="请输入关键词" class="search_words_input" v-model="searchInput"/>
                 <div class="search_words_line"></div>
-                <div class="search_words_text">搜索</div>
+                <div class="search_words_text" @click="queryPoetryByInput">搜索</div>
             </div>
 
             <div class="seperate_line"><span class="seperate_line_span">搜索结果：</span></div>
 
             <div class="search_result_container" v-for="searchResult in searchResultList">
-                <div class="search_result_title" v-html="searchResult.title" onclick="window.location.href='poetryContent.html'"></div>
-                <div class="search_result_author">{{searchResult.author}}</div>
+                <div class="search_result_title" v-html="searchResult.title"
+                     @click="enterPoetryContent(searchResult.id)"></div>
+                <div class="search_result_author" v-html="searchResult.author"></div>
                 <div class="search_result_content" v-html="searchResult.content"></div>
+            </div>
+
+            <div class="block" style="margin-top: 40px; font-size: 16px;" v-if="paginationShow">
+                <el-pagination
+                    :total="pageNum"
+                    layout="prev, pager, next"
+                    :current-page="currentPage"
+                    @current-change="currentPageChange">
+                </el-pagination>
             </div>
         </div>
     </div>
@@ -66,59 +83,55 @@
     <script src="../js/jquery.js"></script>
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <script src="../js/vue.min.js"></script>
+    <!-- import Vue before Element -->
+    <!-- <script src="../elementUI/vue.js"></script> -->
+    <!-- import JavaScript -->
+    <script src="../elementUI/elementUI.js"></script>
     <script type="text/javascript">
         new Vue({
             el: '#vue_moudle',
-            data: {
+            data: function()
+            {
+            return{
                 userName: '',
-                searchTypeList: [
+                leixingList: [
                     {
+                        leixingming: "chaodai",
                         title: '朝代',
-                        content: ['先秦', '两汉', '魏晋', '南北朝', '隋代', '唐代', '五代', '宋代', '金朝', '元代', '明代', '清代']
+                        content: ['先秦', '两汉', '魏晋', '南北朝', '隋代', '唐代', '五代', '宋代', 
+                                  '金朝', '元代', '明代', '清代']
                     },
                     {
+                        leixingming: "zuozhe",
                         title: '作者',
-                        content: ['李白', '杜甫', '苏轼', '王维', '杜牧', '陆游', '元稹', '李煜', '李白', '岑参', '韩愈', '贾岛', '曹操', '柳永',
-                                  '李赫', '曹植', '孟郊', '罗隐', '王建', '王勃', '晏殊', '卢纶', '岳飞', '屈原', '朱熹', '高适', '秦观', '贺铸',
-                                  '纳兰性德', '白居易', '辛弃疾', '李清照', '刘禹锡', '李商隐', '陶渊明', '孟浩然', '柳宗元', '王安石', '欧阳修',
-                                  '刘长卿', '温庭筠', '王昌龄', '杨万里', '范仲淹', '周邦彦', '晏几道', '马致远', '张九龄', '黄庭坚', '周敦颐']
+                        content: ['李白', '杜甫', '苏轼', '王维', '杜牧', '陆游', '元稹', '李煜', '李白',      '岑参', '韩愈', '贾岛', '曹操', '柳永', '李赫', '曹植', '孟郊', '罗隐',
+                                  '王建', '王勃', '晏殊', '卢纶', '岳飞', '屈原', '朱熹', '高适', '秦观',
+                                  '贺铸', '纳兰性德', '白居易', '辛弃疾', '李清照', '刘禹锡', '李商隐', 
+                                  '陶渊明', '孟浩然', '柳宗元', '王安石', '欧阳修', '刘长卿', '温庭筠', 
+                                  '王昌龄', '杨万里', '范仲淹', '周邦彦', '晏几道', '马致远', '张九龄', 
+                                  '黄庭坚', '周敦颐']
                     },
                     {
+                        leixingming: "fenlei",
                         title: '类型',
-                        content: ['写景', '咏物', '春天', '夏天', '秋天', '冬天', '写雨', '写雪', '写风', '写花',
-                                  '梅花', '荷花', '菊花', '柳树', '月亮', '山水', '写山', '写水', '长江', '黄河', '儿童',
-                                  '写鸟', '写马', '田园', '边塞', '地名', '节日', '春节', '元宵', '寒食', '清明', '端午',
-                                  '七夕', '中秋', '重阳', '怀古', '抒情', '爱国', '离别', '送别', '思乡', '思念', '爱情',
-                                  '励志', '哲理', '闺怨', '悼亡', '写人', '老师', '母亲', '友情', '战争', '读书', '惜时',
+                        content: ['写景', '咏物', '春天', '夏天', '秋天', '冬天', '写雨', '写雪', '写风',
+                                  '写花', '梅花', '荷花', '菊花', '柳树', '月亮', '山水', '写山', '写水',
+                                  '长江', '黄河', '儿童', '写鸟', '写马', '田园', '边塞', '地名', '节日',
+                                  '春节', '元宵', '寒食', '清明', '端午', '七夕', '中秋', '重阳', '怀古',
+                                  '抒情', '爱国', '离别', '送别', '思乡', '思念', '爱情', '励志', '哲理',
+                                  '闺怨', '悼亡', '写人', '老师', '母亲', '友情', '战争', '读书', '惜时',
                                   '忧民', '婉约', '豪放', '民谣']
                     }
                 ],
-                searchResultList: [
-                    {
-                        title: '沁园春·<span class="red">雪</span>',
-                        author: '近代/毛泽东',
-                        content: '北国风光，千里冰封，万里<span class="red">雪</span>飘。<br/>' +
-                                 '望长城内外，惟余莽莽；大河上下，顿失滔滔。<br/>' + 
-                                 '山舞银蛇，原驰蜡象，欲与天公试比高。<br/>' + 
-                                 '须晴日，看红装素裹，分外妖娆。<br/>' + 
-                                 '江山如此多娇，引无数英雄竞折腰。<br/>' + 
-                                 '惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。<br/>' + 
-                                 '一代天骄，成吉思汗，只识弯弓射大雕。<br/>' + 
-                                 '俱往矣，数风流人物，还看今朝。',
-                    },
-                    {
-                        title: '江<span class="red">雪</span>',
-                        author: '唐代/柳宗元',
-                        content: '千山鸟飞绝，万径人踪灭。<br/>' +
-                                 '孤舟蓑笠翁，独钓寒江<span class="red">雪</span>。',
-                    },
-                    {
-                        title: '<span class="red">雪</span>梅·其一',
-                        author: '宋代/卢梅坡',
-                        content: '梅雪争春未肯降，骚人搁笔费评章。<br/>' +
-                                 '梅须逊<span class="red">雪</span>三分白，<span class="red">雪</span>却输梅一段香。',
-                    }
-                ],
+                searchInput: "",
+                currentSearch: 0,//0 为分类， 1 为全文
+                searchResultList: [],
+                currentLeixingming: '',
+                currentMingcheng: '',
+                currentPage: 1,
+                pageNum: 1,
+                paginationShow: false
+            }
             },
             mounted: function () {
                 this.$nextTick(function () {
@@ -133,7 +146,148 @@
                         }
                     }
                 })
-            }
+            },
+            methods: {
+                searchByLeixingming: function (leixingming, mingcheng) {
+                    var that = this;
+                    this.currentSearch = 0;
+                    this.currentPage = 1;
+                    this.currentLeixingming = leixingming;
+                    this.currentMingcheng = mingcheng;
+                    console.log("this.pageNum" + this.pageNum);
+                    $.ajax({
+                        url:"../poetry/queryPoetryByLeixingming",
+                        data:{
+                            leixingming: this.currentLeixingming,
+                            mingcheng: this.currentMingcheng,
+                            pageMaxNum: 10,
+                            pageNo: this.currentPage
+                        },
+                        type:"get",
+                        dataType:"json",
+                        success:function(data)
+                        {
+                            that.searchResultList = [];
+                            console.log("queryPoetryByLeixingming success");
+                            for(var i = 0; i < data.data.poetry.length; i++){
+                                var poetry = {};
+                                poetry.id = data.data.poetry[i].id;
+                                poetry.title = data.data.poetry[i].mingcheng;
+                                poetry.content = data.data.poetry[i].yuanwen;
+                                if(that.currentLeixingming == "chaodai"){
+                                    poetry.author = "<span class='red'>" + data.data.poetry[i].chaodai + "</span>" + '/' + data.data.poetry[i].zuozhe;
+                                }else if(that.currentLeixingming == "zuozhe"){
+                                    poetry.author = data.data.poetry[i].chaodai +  '/' + "<span class='red'>" + data.data.poetry[i].zuozhe + "</span>";
+                                }
+                                that.searchResultList.push(poetry);
+                            }
+                            that.pageNum = data.data.pageNum * 10;
+                            that.paginationShow = true;
+                        }
+                    }); 
+                },
+                currentPageChange: function(currentPage){
+                    var that = this;
+                    this.currentPage = currentPage;
+                    if(this.currentSearch == 0){
+                        $.ajax({
+                            url:"../poetry/queryPoetryByLeixingming",
+                            data:{
+                                leixingming: this.currentLeixingming,
+                                mingcheng: this.currentMingcheng,
+                                pageMaxNum: 10,
+                                pageNo: this.currentPage
+                            },
+                            type:"get",
+                            dataType:"json",
+                            success:function(data)
+                            {
+                                that.searchResultList = [];
+                                console.log("pageNoChange success");
+                                for(var i = 0; i < data.data.poetry.length; i++){
+                                    var poetry = {};
+                                    poetry.id = data.data.poetry[i].id;
+                                    poetry.title = data.data.poetry[i].mingcheng;
+                                    poetry.content = data.data.poetry[i].yuanwen;
+                                    if(that.currentLeixingming == "chaodai"){
+                                        poetry.author = "<span class='red'>" + data.data.poetry[i].chaodai + "</span>" + '/' + data.data.poetry[i].zuozhe;
+                                    }else if(that.currentLeixingming == "zuozhe"){
+                                        poetry.author = data.data.poetry[i].chaodai +  '/' + "<span class='red'>" + data.data.poetry[i].zuozhe + "</span>";
+                                    }
+                                    that.searchResultList.push(poetry);
+                                }
+                                that.pageNum = data.data.pageNum * 10;
+                                that.paginationShow = true;
+                            }
+                        }); 
+                    }else{
+                        $.ajax({
+                            url:"../poetry/queryPoetryByInput",
+                            data:{
+                                yuanwen: this.searchInput,
+                                pageMaxNum: 10,
+                                pageNo: this.currentPage
+                            },
+                            type:"get",
+                            dataType:"json",
+                            success:function(data)
+                            {
+                                that.searchResultList = [];
+                                console.log("pageNoChange success");
+                                for(var i = 0; i < data.data.poetry.length; i++){
+                                    var poetry = {};
+                                    poetry.id = data.data.poetry[i].id;
+                                    poetry.title = data.data.poetry[i].mingcheng;
+                                    poetry.author = data.data.poetry[i].chaodai + data.data.poetry[i].zuozhe;
+                                    var content = data.data.poetry[i].yuanwen;
+                                    var contentArray = content.split(that.searchInput);
+                                    var insertString = "<span class='red'>" + that.searchInput + "</span>";
+                                    poetry.content = contentArray.join(insertString);
+                                    that.searchResultList.push(poetry);
+                                }
+                                that.pageNum = data.data.pageNum * 10;
+                                that.paginationShow = true;
+                            }
+                        }); 
+                    }
+                },
+                queryPoetryByInput: function(){
+                    var that = this;
+                    this.currentSearch = 1;
+                    this.currentPage = 1;
+                    $.ajax({
+                        url:"../poetry/queryPoetryByInput",
+                        data:{
+                            yuanwen: this.searchInput,
+                            pageMaxNum: 10,
+                            pageNo: this.currentPage
+                        },
+                        type:"get",
+                        dataType:"json",
+                        success:function(data)
+                        {
+                            that.searchResultList = [];
+                            console.log("pageNoChange success");
+                            for(var i = 0; i < data.data.poetry.length; i++){
+                                var poetry = {};
+                                poetry.id = data.data.poetry[i].id;
+                                poetry.title = data.data.poetry[i].mingcheng;
+                                poetry.author = data.data.poetry[i].chaodai + data.data.poetry[i].zuozhe;
+                                var content = data.data.poetry[i].yuanwen;
+                                var contentArray = content.split(that.searchInput);
+                                var insertString = "<span class='red'>" + that.searchInput + "</span>";
+                                poetry.content = contentArray.join(insertString);
+                                that.searchResultList.push(poetry);
+                            }
+                            that.pageNum = data.data.pageNum * 10;
+                            that.paginationShow = true;
+                        }
+                    }); 
+                },
+                enterPoetryContent: function(poetryId){
+                    window.open("poetryContent.html?poetryId=" + poetryId);
+                }
+            },
         })
     </script>
   </body>
