@@ -77,10 +77,10 @@ public class PoetryController
 	 */
 	@RequestMapping("/queryPoetryContentAndCommentsById")
 	@ResponseBody
-	public Map<String, Object> queryPoetryContentAndCommentsById(@RequestParam int id)
+	public Map<String, Object> queryPoetryContentAndCommentsById(@RequestParam int id, @RequestParam int userId)
 	{
 		System.out.println("enter queryPoetryContentById controller");
-		return ResponseMapUtil.responseSuccess(poetryService.queryPoetryContentAndCommentsById(id));
+		return ResponseMapUtil.responseSuccess(poetryService.queryPoetryContentAndCommentsById(id, userId));
 		
 	}
 	

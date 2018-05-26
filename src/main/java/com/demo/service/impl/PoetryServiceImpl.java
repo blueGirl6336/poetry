@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.demo.bean.PoetryBean;
 import com.demo.bean.CommentBean;
 import com.demo.dao.PoetryDao;
+import com.demo.dao.CollectDao;
 import com.demo.pojo.Poetry;
 import com.demo.service.PoetryService;
 import com.demo.service.CommentService;
@@ -29,6 +30,9 @@ public class PoetryServiceImpl implements PoetryService{
 
 	@Autowired
 	private PoetryDao poetryDao;
+	
+	@Autowired
+	private CollectDao collectDao;
 	
 	@Autowired
 	private CommentService commentService;
@@ -49,7 +53,7 @@ public class PoetryServiceImpl implements PoetryService{
 	}
 	
 	@Override
-	public Map<String, Object> queryPoetryContentAndCommentsById(int id)
+	public Map<String, Object> queryPoetryContentAndCommentsById(int id, int userId)
 	{
 		System.out.println("enter impl class");
 		Map<String, Object> poetryContent = new HashMap<String, Object>();
@@ -91,6 +95,11 @@ public class PoetryServiceImpl implements PoetryService{
 			poetryContent.put("comment", "null");
 		}else{
 			poetryContent.put("comment", commentBeanList);
+		}
+		if(collectDao.queryCollectByUIdAndPoetryId(userId, id) == null){
+			poetryContent.put("notLike", true);
+		}else{
+			poetryContent.put("notLike", false);
 		}
 		return poetryContent;
 	}

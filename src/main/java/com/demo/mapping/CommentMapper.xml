@@ -38,5 +38,10 @@
     	set comment_likeNum = comment_likeNum + 1 
     	where comment_id = #{commentId};
     </insert>
+    
+    <!--获得所有评论 -->
+	<select id="selectAllComment" resultMap="CommentResultMap">
+		select * from comment_table
+	</select>
 	
 </mapper>

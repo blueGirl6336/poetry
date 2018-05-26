@@ -29,4 +29,10 @@ public interface CommentDao {
 	 */
 	public int addCommentLikeNum(int commentId);
 	
+	/**
+	 * 获取所有评论
+	 * @return
+	 */
+	public List<Comment> selectAllComment();
+	
 }

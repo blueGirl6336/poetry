@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.demo.dao.CollectDao">
+	<resultMap id="CollectResultMap" type="com.demo.pojo.Collect">
+	    <id column="collect_id" jdbcType="INTEGER" property="collectId" />
+	    <result column="collect_uid" jdbcType="INTEGER" property="collectUId" />
+	    <result column="collect_poetryId" jdbcType="INTEGER" property="collectPoetryId" />
+	</resultMap>
+	
+	<sql id="Collect_Column_List">
+    	collect_id, collect_uid, collect_poetryId
+  	</sql>
+  	
+	
+	<!--新增下载信息-->
+    <insert id="insertCollect" parameterType="com.demo.pojo.Collect">
+        insert into collect_table(collect_id, collect_uid, collect_poetryId) 
+        values(#{collectId}, #{collectUId}, #{collectPoetryId});
+    </insert>
+    
+    <!-- 根据用户id,诗词id查找是否有此记录  -->
+    <select id="queryCollectByUIdAndPoetryId" resultMap="CollectResultMap">
+    select 
+    <include refid="Collect_Column_List" />
+    from collect_table
+    where collect_uid = #{collectUId, jdbcType=INTEGER} 
+    and 
+    collect_poetryId = #{collectPoetryId, jdbcType=INTEGER}
+  </select>
+	
+</mapper>

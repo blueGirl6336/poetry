@@ -33,5 +33,11 @@ public interface CommentService{
 	 * @return
 	 */
 	public int addCommentLikeNum(int commentId);
+	
+	/**
+	 * 根据时间获取评论
+	 * @return
+	 */
+	public List<CommentBean> getCommentSortByDatetime();
 
 }

@@ -49,6 +49,7 @@
     vertical-align: middle;
     color: rgb(126, 128, 127);
     font-size: 16px;
+    cursor: pointer;
 }
 
 .comment_bottom{
@@ -60,6 +61,7 @@
     color: rgb(196, 172, 100);
     line-height: 20px;
     vertical-align: middle;
+    cursor: pointer;
 }
 .comment_situation_container{
     float: right;

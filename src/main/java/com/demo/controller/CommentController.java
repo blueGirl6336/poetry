@@ -69,4 +69,12 @@ public class CommentController
 		}
 	}
 	
+	@RequestMapping("/getCommentSortByDatetime")
+	@ResponseBody
+	public Map<String, Object> getCommentSortByDatetime()
+	{
+		List<CommentBean> getCommentSortByDatetimeResult = commentService.getCommentSortByDatetime();
+		return ResponseMapUtil.responseSuccess(getCommentSortByDatetimeResult);
+	}
+	
 }

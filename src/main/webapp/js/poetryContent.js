@@ -40,6 +40,7 @@ new Vue({
                 iconSrc: 'glyphicon glyphicon-save',
             }
         ],
+        notLike: true,
         poetryTitle: '',
         poetryAuthorDynasty: '',
         poetryAuthor: '',
@@ -90,7 +91,8 @@ new Vue({
             $.ajax({
                 url:"../poetry/queryPoetryContentAndCommentsById",
                 data:{
-                    id: this.poetryId
+                    id: this.poetryId,
+                    userId: this.userId
                 },
                 type:"get",
                 dataType:"json",
@@ -121,6 +123,7 @@ new Vue({
                     }else{
                         that.poetryAnalysisList[3].moudleContent = "暂无";
                     }
+                    that.notLike = data.data.notLike;
                     if(data.data.comment != "null"){
                         console.log("data.data.comment != null");
                         var commentList = data.data.comment;
@@ -236,6 +239,60 @@ new Vue({
                     that.commentList[commentIndex].replyBeanList[replyIndex].replyLikeNum ++;
                 }
             });
+        },
+        downloadPoetry: function(){
+            var that = this;
+            $.ajax({
+              url:"../download/insertDownload",
+              data:{
+                downloadUId: this.userId,
+                downloadPoetryId: this.poetryId
+              },
+                type:"get",
+                dataType:"json",
+                success:function(data)
+                {
+                    console.log("insertDownload success");
+                    if(data.success == true){
+                        var txtPoetry = that.poetryContent.replace(/<br>/g, "\n");
+                        var txtZhushi = that.poetryAnalysisList[0].moudleContent.replace(/<br>/g, "\n");
+                        var txtYiwen = that.poetryAnalysisList[1].moudleContent.replace(/<br>/g, "\n");
+                        var txtShangxi = that.poetryAnalysisList[2].moudleContent.replace(/<br>/g, "\n");
+                        var txtZuozhe = that.poetryAnalysisList[3].moudleContent.replace(/<br>/g, "\n");
+                        var txtContent = '正文' + "\r" + '\n' + txtPoetry + '\r' + '注释' + "\r" + '\n' + txtZhushi + '\r' + '\n' + '译文' + '\r' + '\n' +
+                                         txtYiwen + "\r" + '\n'  + '赏析' + "\r"  + '\n' + txtShangxi + '\r' + '作者' + "\r" + '\n' + txtZuozhe + '\r';
+                        that.$options.methods.download(that.poetryTitle, txtContent);
+                    }else{
+                        alert(data.data);
+                    }
+                }
+            });
+        },
+        collectPoetry: function(){
+            var that = this;
+            $.ajax({
+              url:"../collect/insertCollect",
+              data:{
+                collectUId: this.userId,
+                collectPoetryId: this.poetryId
+              },
+                type:"get",
+                dataType:"json",
+                success:function(data)
+                {
+                    console.log("insertCollect success");
+                    that.notLike = false;
+                }
+            });
+        },
+        download: function (filename, text){ 
+            var element = document.createElement('a'); 
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text)); 
+            element.setAttribute('download', filename); 
+            element.style.display = 'none'; 
+            document.body.appendChild(element); 
+            element.click(); 
+            document.body.removeChild(element); 
         },
         getNowTime: function(){
             var myDate = new Date();

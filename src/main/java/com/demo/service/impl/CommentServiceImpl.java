@@ -2,6 +2,7 @@ package com.demo.service.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -17,6 +18,7 @@ import com.demo.bean.CommentBean;
 import com.demo.bean.ReplyBean;
 import com.demo.dao.UserDao;
 import com.demo.dao.CommentDao;
+import com.demo.dao.PoetryDao;
 import com.demo.pojo.Comment;
 import com.demo.service.CommentService;
 import com.demo.service.ReplyService;
@@ -33,6 +35,9 @@ public class CommentServiceImpl implements CommentService{
 	
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private PoetryDao poetryDao;
 	
 	@Autowired
 	private ReplyService replyService;
@@ -91,5 +96,27 @@ public class CommentServiceImpl implements CommentService{
 			e.printStackTrace();
 			return 0;
 		}
+	}
+	
+	@Override
+	public List<CommentBean> getCommentSortByDatetime()
+	{
+		List <Comment> commentList = commentDao.selectAllComment();
+		List<CommentBean> commentBeanList = new ArrayList<CommentBean>();
+		for(Comment comment : commentList){
+			CommentBean commentBean = new CommentBean();
+			commentBean.setCommentId(comment.getCommentId());
+			commentBean.setPoetryId(comment.getPoetryId());
+			commentBean.setPoetryName(poetryDao.queryPoetryById(comment.getPoetryId()).getMingcheng());
+			commentBean.setCommentUId(comment.getCommentUId());
+			commentBean.setCommentUserName(userDao.queryUserNameById(comment.getCommentUId()));
+			commentBean.setCommentContent(comment.getCommentContent().replaceAll("\n", "<br>"));
+			commentBean.setCommentDateTime(comment.getCommentDateTime());
+			commentBean.setCommentLikeNum(comment.getCommentLikeNum());
+			commentBean.setReplyBeanList(replyService.queryReplyByCommentId(comment.getCommentId()));
+			commentBeanList.add(commentBean);
+		}
+		Collections.sort(commentBeanList);
+		return commentBeanList;
 	}
 }

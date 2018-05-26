@@ -29,7 +29,7 @@ public interface PoetryService{
 	 * @param id
 	 * @return
 	 */
-	public Map<String, Object> queryPoetryContentAndCommentsById(int id);
+	public Map<String, Object> queryPoetryContentAndCommentsById(int id, int userId);
 	
 	//根据朝代获取诗词列表和分页页数
 	public List<PoetryBean> queryPoetryByChaodai(String chaodai, int pageMaxNum, int pageNo);

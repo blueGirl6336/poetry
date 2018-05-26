@@ -51,11 +51,17 @@
             </div>
 
             <div class="right_outline_container">
-                <p class="right_outline_link"
-                   v-for="rightOutline in rightOutlineList">
-                   {{rightOutline.name}}
+                <p class="right_outline_link">
+                   收藏
                    &ensp;
-                   <span :class="rightOutline.iconSrc"></span>
+                   <span class="glyphicon glyphicon-heart-empty" v-if="notLike"
+                         @click="collectPoetry"></span>
+                   <span class="glyphicon glyphicon-heart" v-else></span>
+                </p>
+                <p class="right_outline_link" @click="downloadPoetry">
+                   下载
+                   &ensp;
+                   <span class="glyphicon glyphicon-save"></span>
                 </p>
             </div>
 
