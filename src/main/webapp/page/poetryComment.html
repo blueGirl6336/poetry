@@ -28,7 +28,7 @@
         </ul>
 
         <div class="poetry_comment_container">
-            <div class="comment_container" v-for="commentContent in commentContentList">
+            <div class="comment_container" v-for="(commentContent, index) in commentContentList">
                 <div class="comment_title">
                     <img class="comment_img" :src="commentContent.imgSrc">
                     <span class="comment_name">{{commentContent.commentUserName}}</span>
@@ -40,12 +40,49 @@
                     <span class="comment_from"
                           @click="enterPoetryContent(commentContent.poetryId)">来自《{{commentContent.poetryName}}》</span>
                     <div class="comment_situation_container">
-                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                        <span class="glyphicon glyphicon-heart-empty" v-if="commentContent.notLike" @click="addLikeNum(index, commentContent.commentId)">
+                        </span>
+                        <span class="glyphicon glyphicon-heart" v-else></span>
                         <span class="comment_like_num">&ensp;{{commentContent.commentLikeNum}}&ensp;&ensp;&ensp;</span>
-                        <span class="glyphicon glyphicon-edit"></span>
+                        <span class="glyphicon glyphicon-edit" @click="clickReplyIcon(index)"></span>
                         <span class="comment_reply_num">&ensp;{{commentContent.commentReplyNum}}</span>
                     </div>
                 </div>
+
+
+                <div class="reply_container" v-if="commentContent.replyShow">
+                        <div class="reply" v-for="(reply, replyIndex) in commentContent.replyBeanList">
+                            <div class="reply_top_container">
+                                <span>{{reply.fromUserName}}</span>
+                                <div>
+                                    <span class="glyphicon glyphicon-heart-empty" v-if="reply.notLike" @click="clickReplyLikeIcon(index, replyIndex, reply.replyId)"></span>
+                                    <span class="glyphicon glyphicon-heart" v-else></span>
+                                    <span class="reply_like_num">&ensp;{{reply.replyLikeNum}}&ensp;&ensp;&ensp;</span>
+                                </div>
+                            </div>
+                            <p class="reply_content" v-html="reply.replyContent"></p>
+                        </div>
+
+                        <div class="reply" v-if="commentContent.addReplyShow">
+                            <textarea class="insert_reply_content" placeholder="请输入您的回复" v-model="replyContent">
+                            </textarea>
+                            <div>
+                                <input class="insert_reply_button" type="button" value="确认回复" @click="insertReply(commentContent.commentId, commentContent.commentUId)"/>
+                            </div>
+                        </div>
+                    </div>
+                <!-- <div class="reply_container" v-if="commentContent.replyShow">
+                <div class="reply">
+                    <textarea class="insert_reply_content" placeholder="请输入您的回复"
+                                      v-model="replyContent">
+                    </textarea>
+                    <div>
+                        <input class="insert_reply_button" type="button" value="确认回复"/>
+                        <input class="insert_reply_button" type="button" value="确认回复"
+                                @click="insertReply(comment.commentId, comment.commentUId)"/>
+                    </div>
+                </div>
+                </div> -->
             </div>
         </div>
 
@@ -61,61 +98,9 @@
             el: '#vue_moudle',
             data: {
                 userName: '',
-                commentContentList: [
-                    {
-                        imgSrc: '../img/user_img1.jpeg',
-                        name: '若现',
-                        time: '17分钟前',
-                        content: '春未老，然念想老了<br/>' + 
-                                 '春又老，这念想便又老了一分',
-                        from: '谒金门·春又老',
-                        likeNum: 4,
-                        replyNum: 0,
-                    },
-                    {
-                        imgSrc: '../img/user_img2.jpg',
-                        name: '雨眠',
-                        time: '21分钟前',
-                        content: '之子于归，远送于野<br/>' +
-                                 '我送你，执着地远至天涯海角，执着地远至我能及的最远，剩下的路，无奈我不能陪你走下去，无奈还是要分离。' + 
-                                 '我能陪你到明天，但不能陪你到永远。' + 
-                                 '之子于归，远送于野。' + 
-                                 '瞻望弗及，泣涕如雨。' + 
-                                 '时光里的分别，大抵亦是如此。',
-                        from: '咏柳/柳枝词',
-                        likeNum: 1,
-                        replyNum: 0,
-                    },
-                    {
-                        imgSrc: '../img/user_img3.jpg',
-                        name: 'hero',
-                        time: '30分钟前',
-                        content: '晚来天欲雪<br/>' + 
-                                 '能饮一杯无<br/><br/>' + 
-                                 '莫名难过呢？',
-                        from: '问刘十九',
-                        likeNum: 0,
-                        replyNum: 1,
-                    },
-                    {
-                        imgSrc: '../img/user_img4.jpeg',
-                        name: '雨眠',
-                        time: '21分钟前',
-                        content: '君不闻，霜雪吹满头，也算是白首',
-                        from: '咏柳/柳枝词',
-                        likeNum: 6,
-                        replyNum: 3,
-                    },
-                    {
-                        imgSrc: '../img/user_img5.jpg',
-                        name: '雨眠',
-                        time: '21分钟前',
-                        content: '苏轼的《江城子·密州出猎》也有句“老夫聊发少年狂”。算是引用？',
-                        from: '咏柳/柳枝词',
-                        likeNum: 1,
-                        replyNum: 0,
-                    },
-                ],                
+                userId: 0,
+                commentContentList: [],
+                replyContent: ''           
             },
             mounted: function () {
                 this.$nextTick(function () {
@@ -127,7 +112,9 @@
                         var arr = arrCookie[i].split("="); 
                         if(arr[0] == "userName"){
                             this.userName = arr[1];
-                            break;
+                        }
+                        if(arr[0] == "userId"){
+                            this.userId = arr[1];
                         }
                     }
                     $.ajax({
@@ -143,6 +130,21 @@
                                 var commentContentList = data.data;
                                 for(var i = 0 ; i < commentContentList.length; i++){
                                     commentContentList[i].commentReplyNum = commentContentList[i].replyBeanList.length;
+                                    commentContentList[i].notLike = true;
+                                    // commentContentList[i].replyShow = false;
+
+
+                                    commentContentList[i].addReplyShow = false;
+                                    if(commentContentList[i].replyBeanList.length == 0){
+                                        commentContentList[i].replyShow = false;
+                                    }else{
+                                        commentContentList[i].replyShow = true;
+                                    }
+                                    for(var j = 0; j < commentContentList[i].replyBeanList.length; j++){
+                                        commentContentList[i].replyBeanList[j].notLike = true;
+                                    }
+
+
                                 }
                                 that.commentContentList = commentContentList;
                             }
@@ -153,6 +155,99 @@
             methods: {
                 enterPoetryContent: function(poetryId){
                     window.open("poetryContent.html?poetryId=" + poetryId);
+                },
+                addLikeNum: function(index, commentId){
+                    var that = this;
+                    $.ajax({
+                      url:"../comment/addCommentLikeNum",
+                      data:{
+                        commentId: commentId,
+                      },
+                        type:"get",
+                        dataType:"json",
+                        success:function(data)
+                        {
+                            console.log("addCommentLikeNum success");
+                            that.commentContentList[index].notLike = false;
+                            that.commentContentList[index].commentLikeNum ++;
+                        }
+                    });
+                },
+                clickReplyIcon: function(index){
+                    this.commentContentList[index].replyShow = true;
+                    for(var i = 0; i < this.commentContentList.length; i++){
+                        this.commentContentList[i].addReplyShow = false;
+                    }
+                    this.commentContentList[index].addReplyShow = true;
+                },
+                insertReply: function(toCommentId, toUId){
+                    var replyDateTime = this.$options.methods.getNowTime();
+                    var that = this;
+                    var replyContent = this.replyContent.replace(/<br>/g, "\n");
+                    console.log("replyContent: " + replyContent);
+                    $.ajax({
+                      url:"../reply/insertReply",
+                      data:{
+                          toCommentId: toCommentId,
+                          fromUId: that.userId,
+                          toUId: toUId,
+                          replyContent: replyContent,
+                          replyDateTime: replyDateTime,
+                          replyLikeNum: 0
+                      },
+                        type:"get",
+                        dataType:"json",
+                        success:function(data)
+                        {
+                            alert(data.data);
+                            console.log("insertReply success");
+                            location.reload();
+                        }
+                    });
+                },
+                clickReplyLikeIcon: function(commentIndex, replyIndex, replyId){
+                    var that = this;
+                    $.ajax({
+                      url:"../reply/addReplyLikeNum",
+                      data:{
+                        replyId: replyId,
+                      },
+                        type:"get",
+                        dataType:"json",
+                        success:function(data)
+                        {
+                            console.log("addReplyLikeNum success");
+                            that.commentContentList[commentIndex].replyBeanList[replyIndex].notLike = false;
+                            that.commentContentList[commentIndex].replyBeanList[replyIndex].replyLikeNum ++;
+                        }
+                    });
+                },
+                getNowTime: function(){
+                    var myDate = new Date();
+                    var year = myDate.getFullYear(); 
+                    var month = myDate.getMonth() + 1;
+                    if (month >= 1 && month <= 9) {
+                        month = "0" + month;
+                    }
+                    var day = myDate.getDate();
+                    if (day >= 1 && day <= 9) {
+                        day = "0" + day;
+                    }
+                    var hour = myDate.getHours();
+                    if (hour >= 0 && hour <= 9) {
+                        hour = "0" + hour;
+                    }
+                    var minute = myDate.getMinutes();
+                    if (minute >= 0 && minute <= 9) {
+                        minute = "0" + minute;
+                    }
+                    var second = myDate.getSeconds();
+                    if (second >= 0 && second <= 9) {
+                        second = "0" + second;
+                    }
+                    var commentDateTime = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+                    console.log("commentDateTime" + commentDateTime);
+                    return commentDateTime;
                 }
             }
         })

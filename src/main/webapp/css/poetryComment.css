@@ -71,3 +71,50 @@
     vertical-align: middle;
     margin-right: 50px;
 }
+.glyphicon{
+    cursor: pointer;
+}
+
+
+.reply_container{
+    padding: 0px 20px 0px 20px;
+    width: 820px;
+    position: relative;
+    left: 120px;
+    border-top: 2px solid rgb(216, 212, 209);
+    border-right: 2px solid rgb(216, 212, 209);
+    border-bottom: 1px solid rgb(216, 212, 209);
+    border-left: 2px solid rgb(216, 212, 209);
+    margin-bottom: 10px;
+    background-color: rgb(247, 246, 244);
+}
+.reply{
+    padding: 15px;
+    border-bottom: 1px solid rgb(216, 212, 209);
+}
+.reply_top_container{
+    display: flex;
+    justify-content: space-between;
+}
+.reply_content{
+    margin-top: 10px;
+    line-height: 18px;
+    padding-left: 30px;
+}
+.insert_reply_content{
+    width: 100%;
+    height: 80px;
+    border: 1px solid rgb(200, 199, 188);
+    border-radius: 3px;
+}
+.insert_reply_button{
+    position: relative;
+    left: 650px;
+    width: 80px;
+    height: 30px;
+    margin-top: 15px;
+    border: 0px;
+    background-color: rgb(52, 52, 52);
+    color: rgb(181, 181, 181);
+    border-radius: 3px;
+}
