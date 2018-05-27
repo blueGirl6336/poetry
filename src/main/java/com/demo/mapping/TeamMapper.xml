@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.demo.dao.TeamDao">
+	<resultMap id="TeamResultMap" type="com.demo.pojo.Team">
+	    <id column="team_id" jdbcType="INTEGER" property="teamId" />
+	    <result column="team_uid" jdbcType="INTEGER" property="teamUId" />
+	    <result column="team_name" jdbcType="VARCHAR" property="teamName" />
+	    <result column="team_description" jdbcType="VARCHAR" property="teamDescription" />
+	</resultMap>
+	
+	<sql id="Team_Column_List">
+    	team_id, team_name, team_description, team_uid
+  	</sql>
+  	
+  	<!--获取所有小舍信息 -->
+	<select id="selectAllTeam" resultMap="TeamResultMap">
+		select * from team_table
+	</select>
+	
+	<!--根据小舍id获取小舍 -->
+    <select id="queryTeamById" parameterType="java.lang.Integer" resultMap="TeamResultMap">
+        select team_id, team_name, team_description, team_uid
+		from team_table
+		<where>
+            team_id = #{teamId}
+    	</where>
+    </select>
+    
+</mapper>

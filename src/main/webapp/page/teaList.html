@@ -40,9 +40,9 @@
                         <span class="recommend_tea_author_name">{{tea.author}}</span>
                     </div>
                     <div class="recommend_tea_situation_container">
-                        <span class="glyphicon glyphicon-eye-open"></span>
-                        <span class="recommend_tea_view_num">&ensp;{{tea.viewNum}}&ensp;&ensp;&ensp;</span>
-                        <span class="glyphicon glyphicon-pencil"></span>
+                        <!-- <span class="glyphicon glyphicon-eye-open"></span>
+                        <span class="recommend_tea_view_num">&ensp;{{tea.viewNum}}&ensp;&ensp;&ensp;</span> -->
+                        <span class="glyphicon glyphicon-user"></span>
                         <span class="recommend_tea_reply_num">&ensp;{{tea.replyNum}}</span>
                     </div>
                 </div>
@@ -132,6 +132,18 @@
                             break;
                         }
                     }
+                    $.ajax({
+                      url:"../team/queryTeamById",
+                      data:{
+                        teamId: 1
+                      },
+                        type:"get",
+                        dataType:"json",
+                        success:function(data)
+                        {
+                            console.log("queryTeamById success");
+                        }
+                    });
                 })
             }
         })

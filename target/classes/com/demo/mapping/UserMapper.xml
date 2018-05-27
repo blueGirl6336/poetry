@@ -46,4 +46,11 @@
 		where user_name = #{userName,jdbcType=VARCHAR}
 	</select>
 	
+	<select id="selectUsersByTeamId" parameterType="java.lang.Integer" resultMap="UserResultMap">
+		select 
+		<include refid="User_Column_List" />
+		from user_table
+		where user_id in (select user_id from team_user_table where team_id = #{teamId})
+	</select>
+	
 </mapper>

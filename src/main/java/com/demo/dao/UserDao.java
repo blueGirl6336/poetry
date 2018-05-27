@@ -1,5 +1,7 @@
 package com.demo.dao;
 
+import java.util.List;
+
 //import java.util.List;
 //import org.apache.ibatis.annotations.Param;
 
@@ -33,5 +35,12 @@ public interface UserDao {
 	 * @param userName
 	 * @return
 	 */
-	User selectByUserName(String userName);
+	public User selectByUserName(String userName);
+	
+	/**
+	 * 根据小舍id获取小舍的成员
+	 * @param teamId
+	 * @return
+	 */
+	public List<User> selectUsersByTeamId(int teamId);
 }
