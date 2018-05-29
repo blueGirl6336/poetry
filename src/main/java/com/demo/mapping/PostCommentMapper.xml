@@ -6,9 +6,9 @@
 	    <id column="post_comment_id" jdbcType="INTEGER" property="postCommentId" />
 	    <result column="post_id" jdbcType="INTEGER" property="postId" />
 	    <result column="post_comment_uid" jdbcType="INTEGER" property="postCommentUId" />
-	    <result column="post_comment_content" jdbcType="VARCHAR" property="PostCommentContent" />
-	    <result column="post_comment_dateTime" jdbcType="VARCHAR" property="PostCommentDateTime" />
-	    <result column="post_comment_likeNum" jdbcType="INTEGER" property="PostCommentLikeNum" />
+	    <result column="post_comment_content" jdbcType="VARCHAR" property="postCommentContent" />
+	    <result column="post_comment_dateTime" jdbcType="VARCHAR" property="postCommentDateTime" />
+	    <result column="post_comment_likeNum" jdbcType="INTEGER" property="postCommentLikeNum" />
 	</resultMap>
 	
 	<sql id="PostComment_Column_List">

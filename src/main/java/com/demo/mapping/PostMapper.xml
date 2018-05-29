@@ -5,9 +5,9 @@
 	<resultMap id="PostResultMap" type="com.demo.pojo.Post">
 	    <id column="post_id" jdbcType="INTEGER" property="postId" />
 	    <result column="post_uid" jdbcType="INTEGER" property="postUId" />
-	    <result column="post_title" jdbcType="INTEGER" property="PostTitle" />
-	    <result column="post_content" jdbcType="VARCHAR" property="PostContent" />
-	    <result column="post_dateTime" jdbcType="VARCHAR" property="PostDateTime" />
+	    <result column="post_title" jdbcType="INTEGER" property="postTitle" />
+	    <result column="post_content" jdbcType="VARCHAR" property="postContent" />
+	    <result column="post_dateTime" jdbcType="VARCHAR" property="postDateTime" />
 	</resultMap>
 	
 	<sql id="Post_Column_List">

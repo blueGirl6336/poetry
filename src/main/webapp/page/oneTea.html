@@ -44,18 +44,16 @@
             </div>
 
             <div v-for="tea in recommendTeaList" class="recommend_tea">
-                <p class="recommend_tea_title">{{tea.title}}</p>
-                <p class="recommend_tea_content" v-html="tea.content"></p>
+                <p class="recommend_tea_title" @click="enterPost(tea.postId)">{{tea.postTitle}}</p>
+                <p class="recommend_tea_content" v-html="tea.postContent"></p>
                 <div class="recommend_tea_bottom_container">
                     <div class="recommend_tea_author_container">
                         <img :src="tea.imgSrc" class="recommend_tea_author_img"/>
-                        <span class="recommend_tea_author_name">{{tea.author}}</span>
+                        <span class="recommend_tea_author_name">{{tea.postUserName}}</span>
                     </div>
                     <div class="recommend_tea_situation_container">
-                        <span class="glyphicon glyphicon-eye-open"></span>
-                        <span class="recommend_tea_view_num">&ensp;{{tea.viewNum}}&ensp;&ensp;&ensp;</span>
                         <span class="glyphicon glyphicon-pencil"></span>
-                        <span class="recommend_tea_reply_num">&ensp;{{tea.replyNum}}</span>
+                        <span class="recommend_tea_reply_num">&ensp;{{tea.commentNum}}</span>
                     </div>
                 </div>
             </div>
@@ -72,68 +70,11 @@
             el: '#vue_moudle',
             data: {
                 userName: '',
-                recommendTeaList: [
-                    { 
-                        title: '高山流水觅知音',
-                        imgSrc: '../img/user_img4.jpeg',
-                        author: '苏晴初',
-                        content: '观设擂招亲，热闹非凡。今晴初于此大设擂台，诸位公子佳人皆是主角。' + 
-                                 '若路过此地，出题一首。诗词联古风不限，' + 
-                                 '如若增加难度，可设命题诗词、或限词牌、限韵脚，七弦叹九张机……皆可<br/>' +
-                                 '有题岂能无诗?望诸君落笔成诗，大展才情。以文会友，若觅有缘人不失佳话。',
-                        
-                        viewNum: 3356,
-                        replyNum: 74,
-                    },
-                    { 
-                        title: '填词：凤栖梧',
-                        imgSrc: '../img/user_img5.jpg',
-                        author: '秋萝[蝶恋花]',
-                        content: '求填词一首《凤栖梧》<br/>' + '格律<br/>' +
-                                 '中仄中平平仄仄(韵)。中仄平平，中仄平平仄(韵)。' + 
-                                 '中仄中平平仄仄(韵)，中平中仄平平仄(韵)。' + 
-                                 '中仄中平平仄仄(韵)。中仄平平，中仄平平仄(韵)。' + 
-                                 '中仄中平平仄仄(韵)，中平中仄平平仄(韵)。',
-                        viewNum: 1969,
-                        replyNum: 18,
-                    },
-                    { 
-                        title: '梅逢雪落能增色',
-                        imgSrc: '../img/user_img2.jpg',
-                        author: '苏晴初',
-                        content: '梅逢雪落能增色，<br/>' +
-                                 '＿＿＿＿＿＿＿。<br/>' +
-                                 '对下联或续下一句',
-                        viewNum: 3356,
-                        replyNum: 74,
-                    },
-                    { 
-                        title: '时节映象——路过人间四月天',
-                        imgSrc: '../img/user_img1.jpeg',
-                        author: '咫尺天涯',
-                        content: '十一月初七姚圩村外望乡有感<br/>' +
-                                 '世来薄酒敬余芳，姚圩村外秋水长。<br/>' +
-                                 '故里叶落知几许?  不见隔江月茫茫。<br/><br/>' +
-                                 '还愿诸位:请洒潘江，个倾陆海云尔!',
-                        viewNum: 2940,
-                        replyNum: 71,
-                    },
-                    { 
-                        title: '高山流水觅知音',
-                        imgSrc: '../img/user_img3.jpg',
-                        author: '苏晴初',
-                        content: '山桃红花满上头，蜀江春水拍山流；花红易衰似郎意，水流无限似侬愁。<br/>' +
-                                 '东山歌酒陌上芳菲，还有多少春天的情忆，是谁一语点化了懵懂的春心？' +
-                                 '是谁路过这样的天气？<br/>' +
-                                 '春以末，夏未发，又是谁曾写下与你同在的信笺',
-                        viewNum: 1677,
-                        replyNum: 30,
-                    },
-                    
-                ]
+                recommendTeaList: [],
             },
             mounted: function () {
                 this.$nextTick(function () {
+                    var that = this;
                     console.log("document.cookie: " + document.cookie);
                     var arrCookie = document.cookie.replace(/[ ]/g,"").split(";");
                     for(var i = 0;i < arrCookie.length; i++){
@@ -144,12 +85,32 @@
                             break;
                         }
                     }
+                    $.ajax({
+                      url:"../post/selectAllPost",
+                      data:{
+                      },
+                        type:"get",
+                        dataType:"json",
+                        success:function(data)
+                        {
+                            console.log("selectAllPost success");
+                            if(data.success == true){
+                                var recommendTeaList = data.data;
+                                for(var i = 0 ; i < recommendTeaList.length; i++){
+                                    recommendTeaList[i].commentNum = recommendTeaList[i].postCommentBeanList.length;
+                                }
+                                that.recommendTeaList = recommendTeaList;
+                            }else{
+                                alert(data.data);
+                            }
+                        }
+                    });
                 })
             },
             methods: {
-                // getUserName: function(){
-                    
-                // }
+                enterPost: function(postId){
+                    window.open("postContent.html?postId=" + postId);
+                }
             }
         })
     </script>

@@ -14,7 +14,7 @@ public interface PostDao {
 	 * 获取所有帖子
 	 * @return
 	 */
-	public int selectAllPost();
+	public List<Post> selectAllPost();
 	
 	
 	/**

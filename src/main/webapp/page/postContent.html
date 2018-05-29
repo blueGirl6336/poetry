@@ -1,0 +1,269 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>poetryComment</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../css/poetryComment.css">
+    <link rel="stylesheet" href="../css/postContent.css">
+  </head>
+
+  <body>
+    <div class="postContent_container" id="vue_moudle">
+        <div class="nav_container">
+            <img class="poetry_logo" src="../img/poetry_logo.png"/>
+            <div class="nav_page_container">
+                <span class="nav_span nav_page" onclick="window.location.href='onePoetry.html'">诗词</span>
+                <span class="nav_span nav_page nav_nowPage" onclick="window.location.href='oneTea.html'">茶社</span>
+            </div>
+            <div class="nav_mine_container">
+                <span class="nav_span nav_mine">你好,{{userName}}</span>
+                <span class="nav_span nav_mine">我的</span>
+            </div>
+        </div>
+        <ul class="poetry_nav">
+            <li class="poetry_nav_li poetry_nav_active" onclick="window.location.href='onePoetry.html'">一首</li>
+            <li class="poetry_nav_li" onclick="window.location.href='poetrySearch.html'">诗词</li>
+            <li class="poetry_nav_li" onclick="window.location.href='poetryComment.html'">与君语</li>
+        </ul>
+
+        <div class="post_content_container">
+            <div class="post_container">
+                <p class="post_title">{{postTitle}}</p>
+                <p class="post_userName">{{postUserName}}</p>
+                <p class="post_content" v-html="postContent"></p>
+            </div>
+
+            <div class="comment_container" v-for="(commentContent, index) in commentContentList">
+                <div class="comment_title">
+                    <img class="comment_img" :src="commentContent.imgSrc">
+                    <span class="comment_name">{{commentContent.commentUserName}}</span>
+                    <span class="comment_time">{{commentContent.commentDateTime}}</span>
+                </div>
+                <p class="comment_content" v-html="commentContent.commentContent"
+                   @click="enterPoetryContent(commentContent.poetryId)"></p>
+                <div class="comment_bottom">
+                    <span class="comment_from"
+                          @click="enterPoetryContent(commentContent.poetryId)">来自《{{commentContent.poetryName}}》</span>
+                    <div class="comment_situation_container">
+                        <span class="glyphicon glyphicon-heart-empty" v-if="commentContent.notLike" @click="addLikeNum(index, commentContent.commentId)">
+                        </span>
+                        <span class="glyphicon glyphicon-heart" v-else></span>
+                        <span class="comment_like_num">&ensp;{{commentContent.commentLikeNum}}&ensp;&ensp;&ensp;</span>
+                        <span class="glyphicon glyphicon-edit" @click="clickReplyIcon(index)"></span>
+                        <span class="comment_reply_num">&ensp;{{commentContent.commentReplyNum}}</span>
+                    </div>
+                </div>
+
+
+                <div class="reply_container" v-if="commentContent.replyShow">
+                        <div class="reply" v-for="(reply, replyIndex) in commentContent.replyBeanList">
+                            <div class="reply_top_container">
+                                <span>{{reply.fromUserName}}</span>
+                                <div>
+                                    <span class="glyphicon glyphicon-heart-empty" v-if="reply.notLike" @click="clickReplyLikeIcon(index, replyIndex, reply.replyId)"></span>
+                                    <span class="glyphicon glyphicon-heart" v-else></span>
+                                    <span class="reply_like_num">&ensp;{{reply.replyLikeNum}}&ensp;&ensp;&ensp;</span>
+                                </div>
+                            </div>
+                            <p class="reply_content" v-html="reply.replyContent"></p>
+                        </div>
+
+                        <div class="reply" v-if="commentContent.addReplyShow">
+                            <textarea class="insert_reply_content" placeholder="请输入您的回复" v-model="replyContent">
+                            </textarea>
+                            <div>
+                                <input class="insert_reply_button" type="button" value="确认回复" @click="insertReply(commentContent.commentId, commentContent.commentUId)"/>
+                            </div>
+                        </div>
+                    </div>
+                <div class="reply_container" v-if="commentContent.replyShow">
+                <div class="reply">
+                    <textarea class="insert_reply_content" placeholder="请输入您的回复"
+                                      v-model="replyContent">
+                    </textarea>
+                    <div>
+                        <input class="insert_reply_button" type="button" value="确认回复"/>
+                        <input class="insert_reply_button" type="button" value="确认回复"
+                                @click="insertReply(comment.commentId, comment.commentUId)"/>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- <div>
+    </div> -->
+    <script src="../js/jquery.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/vue.min.js"></script>
+    <script type="text/javascript">
+        new Vue({
+            el: '#vue_moudle',
+            data: {
+                userName: '',
+                userId: 0,
+                postId: 0,
+                postTitle: "与狼共舞",
+                postUserName: "杏花微雨",
+                postContent: '词谱:（龙谱）<br>仄仄平平仄，平平仄仄平。仄平平仄仄平平。平仄仄平平仄，平仄仄平平。<br>仄仄平平仄，平平仄仄平。仄平平仄仄平平。仄仄平平，仄仄仄平平。仄仄仄平平仄，仄仄仄平平。<br>本词牌要求严格，无可平可仄之字。',
+                commentContentList: [],
+                replyContent: '',    
+            },
+            mounted: function () {
+                this.$nextTick(function () {
+                    var that = this;
+                    console.log("document.cookie: " + document.cookie);
+                    var arrCookie = document.cookie.replace(/[ ]/g,"").split(";");
+                    for(var i = 0;i < arrCookie.length; i++){
+                        console.log(arrCookie[i]);   
+                        var arr = arrCookie[i].split("="); 
+                        if(arr[0] == "userName"){
+                            this.userName = unescape(arr[1]);
+                        }
+                        if(arr[0] == "userId"){
+                            this.userId = arr[1];
+                        }
+                    }
+                    this.postId = document.URL.split("?")[1].split("=")[1];
+                    $.ajax({
+                        url:"../post/queryPostById",
+                        data:{
+                            postId: this.postId
+                        },
+                        type:"get",
+                        dataType:"json",
+                        success:function(data)
+                        {
+                            // console.log("getCommentSortByDatetime success");
+                            // if(data.success == true){
+                            //     var commentContentList = data.data;
+                            //     for(var i = 0 ; i < commentContentList.length; i++){
+                            //         commentContentList[i].commentReplyNum = commentContentList[i].replyBeanList.length;
+                            //         commentContentList[i].notLike = true;
+                            //         // commentContentList[i].replyShow = false;
+
+
+                            //         commentContentList[i].addReplyShow = false;
+                            //         if(commentContentList[i].replyBeanList.length == 0){
+                            //             commentContentList[i].replyShow = false;
+                            //         }else{
+                            //             commentContentList[i].replyShow = true;
+                            //         }
+                            //         for(var j = 0; j < commentContentList[i].replyBeanList.length; j++){
+                            //             commentContentList[i].replyBeanList[j].notLike = true;
+                            //         }
+
+
+                            //     }
+                            //     that.commentContentList = commentContentList;
+                            // }
+                        }
+                    });
+                })
+            },
+            methods: {
+                enterPoetryContent: function(poetryId){
+                    window.open("poetryContent.html?poetryId=" + poetryId);
+                },
+                addLikeNum: function(index, commentId){
+                    var that = this;
+                    $.ajax({
+                      url:"../comment/addCommentLikeNum",
+                      data:{
+                        commentId: commentId,
+                      },
+                        type:"get",
+                        dataType:"json",
+                        success:function(data)
+                        {
+                            console.log("addCommentLikeNum success");
+                            that.commentContentList[index].notLike = false;
+                            that.commentContentList[index].commentLikeNum ++;
+                        }
+                    });
+                },
+                clickReplyIcon: function(index){
+                    this.commentContentList[index].replyShow = true;
+                    for(var i = 0; i < this.commentContentList.length; i++){
+                        this.commentContentList[i].addReplyShow = false;
+                    }
+                    this.commentContentList[index].addReplyShow = true;
+                },
+                insertReply: function(toCommentId, toUId){
+                    var replyDateTime = this.$options.methods.getNowTime();
+                    var that = this;
+                    var replyContent = this.replyContent.replace(/<br>/g, "\n");
+                    console.log("replyContent: " + replyContent);
+                    $.ajax({
+                      url:"../reply/insertReply",
+                      data:{
+                          toCommentId: toCommentId,
+                          fromUId: that.userId,
+                          toUId: toUId,
+                          replyContent: replyContent,
+                          replyDateTime: replyDateTime,
+                          replyLikeNum: 0
+                      },
+                        type:"get",
+                        dataType:"json",
+                        success:function(data)
+                        {
+                            alert(data.data);
+                            console.log("insertReply success");
+                            location.reload();
+                        }
+                    });
+                },
+                clickReplyLikeIcon: function(commentIndex, replyIndex, replyId){
+                    var that = this;
+                    $.ajax({
+                      url:"../reply/addReplyLikeNum",
+                      data:{
+                        replyId: replyId,
+                      },
+                        type:"get",
+                        dataType:"json",
+                        success:function(data)
+                        {
+                            console.log("addReplyLikeNum success");
+                            that.commentContentList[commentIndex].replyBeanList[replyIndex].notLike = false;
+                            that.commentContentList[commentIndex].replyBeanList[replyIndex].replyLikeNum ++;
+                        }
+                    });
+                },
+                getNowTime: function(){
+                    var myDate = new Date();
+                    var year = myDate.getFullYear(); 
+                    var month = myDate.getMonth() + 1;
+                    if (month >= 1 && month <= 9) {
+                        month = "0" + month;
+                    }
+                    var day = myDate.getDate();
+                    if (day >= 1 && day <= 9) {
+                        day = "0" + day;
+                    }
+                    var hour = myDate.getHours();
+                    if (hour >= 0 && hour <= 9) {
+                        hour = "0" + hour;
+                    }
+                    var minute = myDate.getMinutes();
+                    if (minute >= 0 && minute <= 9) {
+                        minute = "0" + minute;
+                    }
+                    var second = myDate.getSeconds();
+                    if (second >= 0 && second <= 9) {
+                        second = "0" + second;
+                    }
+                    var commentDateTime = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+                    console.log("commentDateTime" + commentDateTime);
+                    return commentDateTime;
+                }
+            }
+        })
+    </script>
+  </body>
+</html>

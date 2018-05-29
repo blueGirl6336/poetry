@@ -41,12 +41,14 @@
     text-align: center;
     line-height: 40px;
     vertical-align: middle;
+    cursor: pointer;
 }
 .recommend_tea_content{
     width: 750px;
     font-size: 14px;
     color: rgb(126, 128, 127);
     line-height: 25px;
+    text-align: center;
 }
 .recommend_tea_bottom_container{
     width: 850px;
