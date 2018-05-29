@@ -33,11 +33,11 @@
     </insert>
     
     <!--新增回复点赞数 -->
-    <insert id="addReplyLikeNum" parameterType="java.lang.Integer">
+    <update id="addReplyLikeNum" parameterType="java.lang.Integer">
     	update reply_table 
     	set reply_likeNum = reply_likeNum + 1 
     	where reply_id = #{replyId};
-    </insert>
+    </update>
 	
 	
 	<!--新增用户 -->

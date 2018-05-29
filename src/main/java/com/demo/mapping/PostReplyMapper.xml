@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.demo.dao.PostReplyDao">
+	<resultMap id="PostReplyResultMap" type="com.demo.pojo.PostReply">
+	    <id column="post_reply_id" jdbcType="INTEGER" property="postReplyId" />
+	    <result column="to_commentId" jdbcType="INTEGER" property="toCommentId" />
+	    <result column="from_uid" jdbcType="INTEGER" property="fromUId" />
+	    <result column="to_uid" jdbcType="INTEGER" property="toUId" />
+	    <result column="post_reply_content" jdbcType="VARCHAR" property="postReplyContent" />
+	    <result column="post_reply_dateTime" jdbcType="VARCHAR" property="postReplyDateTime" />
+	    <result column="post_reply_likeNum" jdbcType="INTEGER" property="postReplyLikeNum" />
+	</resultMap>
+	
+	<sql id="PostReply_Column_List">
+    	post_reply_id, to_commentId, from_uid, to_uid, post_reply_content, post_reply_dateTime, post_reply_likeNum
+  	</sql>
+  	
+  	<!--根据评论id查找回复列表 -->
+	<select id="queryPostReplyByCommentId" parameterType="java.lang.Integer" resultMap="PostReply_Column_List">
+		select 
+		<include refid="PostReply_Column_List" />
+		from post_reply_table
+		<where>
+            to_commentId = #{postCommentId}
+    	</where>
+	</select>
+	
+	<!--新增回复-->
+    <insert id="insertPostReply" parameterType="com.demo.pojo.PostReply">
+        insert into post_reply_table(to_commentId, from_uid, to_uid, post_reply_content, post_reply_dateTime, post_reply_likeNum) 
+        values(#{toCommentId}, #{fromUId}, #{toUId}, #{postReplyContent}, #{postReplyDateTime}, #{postReplyLikeNum});
+    </insert>
+    
+    <!--新增回复点赞数 -->
+    <update id="addPostReplyLikeNum" parameterType="java.lang.Integer">
+    	update post_reply_table 
+    	set post_reply_likeNum = post_reply_likeNum + 1 
+    	where post_reply_id = #{postReplyId};
+    </update>
+	
+	
+	<!--新增用户 -->
+    <!-- insert id="insertUser" parameterType="com.demo.pojo.User">
+        insert into user_table(user_name,user_password) 
+        values(#{userName},#{password});
+    </insert -->
+	
+</mapper>

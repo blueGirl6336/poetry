@@ -81,7 +81,7 @@ new Vue({
                 console.log(arrCookie[i]);   
                 var arr = arrCookie[i].split("="); 
                 if(arr[0] == "userName"){
-                    this.userName = arr[1];
+                    this.userName = unescape(arr[1]);
                 }
                 if(arr[0] == "userId"){
                     this.userId = arr[1];

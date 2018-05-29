@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.demo.dao.PostDao">
+	<resultMap id="PostResultMap" type="com.demo.pojo.Post">
+	    <id column="post_id" jdbcType="INTEGER" property="postId" />
+	    <result column="post_uid" jdbcType="INTEGER" property="postUId" />
+	    <result column="post_title" jdbcType="INTEGER" property="PostTitle" />
+	    <result column="post_content" jdbcType="VARCHAR" property="PostContent" />
+	    <result column="post_dateTime" jdbcType="VARCHAR" property="PostDateTime" />
+	</resultMap>
+	
+	<sql id="Post_Column_List">
+    	post_id, post_uid, post_title, post_content, post_dateTime
+  	</sql>
+  	
+  	<!--获取所有帖子 -->
+	<select id="selectAllPost" resultMap="PostResultMap">
+		select * from post_table
+	</select>
+	
+	
+	<!--根据帖子id 获取帖子 -->
+	<select id="queryPostById" parameterType="java.lang.Integer" resultMap="PostResultMap">
+		select 
+		<include refid="Post_Column_List" />
+		from post_table
+		<where>
+            post_id = #{postId}
+    	</where>
+	</select>
+    
+</mapper>

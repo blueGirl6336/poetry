@@ -1,16 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <title>觅知音</title>
+    <title>小舍详情</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/all.css">
-    <link rel="stylesheet" href="../css/onePoetry.css">
-    <link rel="stylesheet" href="../css/teaTeam.css">
+    <link rel="stylesheet" href="../css/teamShow.css">
   </head>
 
   <body>
-    <div class="teaTeam_container" id="vue_moudle">
+    <div class="teamShow_container" id="vue_moudle">
         <div class="nav_container">
             <img class="poetry_logo" src="../img/poetry_logo.png"/>
             <div class="nav_page_container">
@@ -29,43 +28,28 @@
         </ul>
 
 
-        <div class="tea_team_container">
-            <div v-for="team in teamList" class="team_container">
-                <div class="team_name_container" @click="enterTeam(team.teamId)">
-                    <img src="../img/team1.jpg" class="team_img">
-                    <p class="team_name">{{team.teamName}}</p>
+        <div class="team_show_container">
+            <div class="team_info_container">
+                <img src="../img/team1.jpg" class="team_info_img">
+                <div class="team_info_description">
+                    <p class="team_info_description_p" v-html="teamDescription"></p>
+                    <span>——@{{teamUserName}}</span>
                 </div>
-                <div class="team_info_container">
-                    <div class="team_info_name_container">
-                        <img :src="team.imgSrc" class="team_info_name_img">
-                        <span class="team_info_name">{{team.teamUserName}}</span>
+            </div>
+            <div class="team_member_topic_container">
+                <div class="team_member_container">
+                    <div class="team_member" v-for="teamMember in teamMemberList">
+                        <img src="../img/user_img4.jpeg" class="team_member_img">
+                        <span class="team_member_name">{{teamMember.userName}}</span>
                     </div>
-                    <div class="team_info_situation_container">
-                        <!-- <span class="glyphicon glyphicon-eye-open"></span>
-                        <span class="team_info_situation_view_num">&ensp;{{team.viewNum}}&ensp;&ensp;&ensp;</span> -->
-                        <!-- <span class="glyphicon glyphicon-pencil"></span> -->
-                        <span class="glyphicon glyphicon-user"></span>
-                        <span class="team_info_situation_reply_num">&ensp;{{team.memberNum}}</span>
+                </div>
+                <div class="team_topic_container">
+                    <div class="team_topic" v-for="teamTopic in teamTopicList">
+                        <p class="team_topic_title">{{teamTopic.topicTitle}}</p>
+                        <p class="team_topic_time">{{teamTopic.topicDateTime}}</p>
                     </div>
                 </div>
             </div>
-
-            <!-- <div v-for="tea in recommendTeaList" class="recommend_tea">
-                <p class="recommend_tea_title">{{tea.title}}</p>
-                <p class="recommend_tea_content" v-html="tea.content"></p>
-                <div class="recommend_tea_bottom_container">
-                    <div class="recommend_tea_author_container">
-                        <img :src="tea.imgSrc" class="recommend_tea_author_img"/>
-                        <span class="recommend_tea_author_name">{{tea.author}}</span>
-                    </div>
-                    <div class="recommend_tea_situation_container">
-                        <span class="glyphicon glyphicon-eye-open"></span>
-                        <span class="recommend_tea_view_num">&ensp;{{tea.viewNum}}&ensp;&ensp;&ensp;</span>
-                        <span class="glyphicon glyphicon-pencil"></span>
-                        <span class="recommend_tea_reply_num">&ensp;{{tea.replyNum}}</span>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div>
 
@@ -79,7 +63,38 @@
             el: '#vue_moudle',
             data: {
                 userName: '',
-                teamList: []
+                userId: 0,
+                teamDescription: "微诗小舍<br><br>诗三百，一言以蔽之，曰无邪<br>期待你的加入",
+                teamUserName: "杏花微雨",
+                teamMemberList: [
+                    {
+                        userName: '我是小可爱呀',
+                    },
+                    {
+                        userName: '三鱼是小傻瓜',
+                    },
+                    {
+                        userName: '然而是我的傻三鱼',
+                    }
+                ],
+                teamTopicList: [
+                    {
+                        topicTitle: '求藏头诗，秋日烂漫',
+                        topicDateTime: '2018-05-28 20:00:00',
+                    },
+                    {
+                        topicTitle: '求藏头诗，秋日烂漫',
+                        topicDateTime: '2018-05-28 20:00:00',
+                    },
+                    {
+                        topicTitle: '求藏头诗，秋日烂漫',
+                        topicDateTime: '2018-05-28 20:00:00',
+                    },
+                    {
+                        topicTitle: '求藏头诗，秋日烂漫',
+                        topicDateTime: '2018-05-28 20:00:00',
+                    },
+                ],
             },
             mounted: function () {
                 this.$nextTick(function () {
@@ -91,7 +106,9 @@
                         var arr = arrCookie[i].split("="); 
                         if(arr[0] == "userName"){
                             this.userName = unescape(arr[1]);
-                            break;
+                        }
+                        if(arr[0] == "userId"){
+                            this.userId = unescape(arr[1]);
                         }
                     }
                     $.ajax({

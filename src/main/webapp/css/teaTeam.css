@@ -23,9 +23,27 @@
     align-items: center;
     border-bottom: 1px solid rgb(211, 210, 205);
 }
+.team_name_container{
+    width: 560px;
+    height: 270px;
+    cursor: pointer;
+}
 .team_img{
     width: 560px;
     height: 270px;
+}
+.team_name{
+    position: relative;
+    top: -270px;
+    width: 560px;
+    height: 270px;
+    line-height: 270px;
+    text-align: center;
+    vertical-align: center;
+    background-color: rgba(105, 105, 105, 0.5);
+    font-size: 25px;
+    color: rgb(255, 255, 255);
+    z-index: 2;
 }
 .team_info_container{
     display: flex;
