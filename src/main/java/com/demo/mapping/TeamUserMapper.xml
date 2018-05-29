@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.demo.dao.TeamUserDao">
+	<resultMap id="TeamUserResultMap" type="com.demo.pojo.TeamUser">
+	    <id column="team_user_id" jdbcType="INTEGER" property="teamUserId" />
+	    <result column="team_id" jdbcType="INTEGER" property="teamId" />
+	    <result column="user_id" jdbcType="INTEGER" property="userId" />
+	</resultMap>
+	
+	<sql id="TeamUser_Column_List">
+    	team_user_id, team_id, user_id
+  	</sql>
+    
+    <!-- 根据用户id,小舍id查找是否有此记录  -->
+    <select id="queryRecordByUIdAndTeamId" resultMap="TeamUserResultMap">
+    select 
+    <include refid="TeamUser_Column_List" />
+    from team_user_table
+    where team_id = #{teamId, jdbcType=INTEGER} 
+    and 
+    user_id = #{userId, jdbcType=INTEGER}
+  </select>
+  
+  <!--新增下载信息-->
+    <insert id="insertRecord" parameterType="com.demo.pojo.TeamUser">
+        insert into team_user_table(team_user_id, team_id, user_d) 
+        values(#{teamUserId}, #{teamId}, #{userId});
+    </insert>
+    
+    <!--根据teamId获得所有成员信息-->
+    <insert id="queryRecordByTeamId" parameterType="java.lang.Integer">
+        select 
+        <include refid="TeamUser_Column_List" />
+        from team_user_table
+        where team_id = #{teamId}
+    </insert>
+	
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.demo.dao.TopicDao">
+	<resultMap id="TopicResultMap" type="com.demo.pojo.Topic">
+	    <id column="topic_id" jdbcType="INTEGER" property="topicId" />
+	    <result column="topic_teamId" jdbcType="INTEGER" property="topicTeamId" />
+	    <result column="topic_title" jdbcType="INTEGER" property="topicTitle" />
+	    <result column="topic_content" jdbcType="VARCHAR" property="topicContent" />
+	    <result column="topic_dateTime" jdbcType="VARCHAR" property="topicDateTime" />
+	</resultMap>
+	
+	<sql id="Topic_Column_List">
+    	topic_id, topic_teamId, topic_title, topic_content, topic_dateTime
+  	</sql>
+  	
+  	<!--获取所有话题 -->
+	<select id="selectAllTopic" resultMap="TopicResultMap">
+		select * from topic_table
+	</select>
+	
+	
+	<!--根据帖子id 获取帖子 -->
+	<select id="queryTopicById" parameterType="java.lang.Integer" resultMap="TopicResultMap">
+		select 
+		<include refid="Topic_Column_List" />
+		from topic_table
+		<where>
+            topic_id = #{topicId}
+    	</where>
+	</select>
+    
+</mapper>

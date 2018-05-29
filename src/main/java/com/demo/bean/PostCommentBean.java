@@ -71,7 +71,7 @@ public class PostCommentBean{
 	public List<PostReplyBean> getPostReplyBeanList() {
 		return postReplyBeanList;
 	}
-	public void setReplyBeanList(List<PostReplyBean> postReplyBeanList) {
+	public void setPostReplyBeanList(List<PostReplyBean> postReplyBeanList) {
 		this.postReplyBeanList = postReplyBeanList;
 	}
 }

@@ -55,7 +55,7 @@ public class PostCommentServiceImpl implements PostCommentService{
 				postCommentBean.setPostCommentContent(postComment.getPostCommentContent().replaceAll("\n", "<br>"));
 				postCommentBean.setPostCommentDateTime(postComment.getPostCommentDateTime());
 				postCommentBean.setPostCommentLikeNum(postComment.getPostCommentLikeNum());
-				postCommentBean.setReplyBeanList(postReplyService.queryPostReplyByCommentId(postComment.getPostCommentId()));
+				postCommentBean.setPostReplyBeanList(postReplyService.queryPostReplyByCommentId(postComment.getPostCommentId()));
 				postCommentBeanList.add(postCommentBean);
 				System.out.println("replyList length" + postCommentBean.getPostReplyBeanList().size());
 			}

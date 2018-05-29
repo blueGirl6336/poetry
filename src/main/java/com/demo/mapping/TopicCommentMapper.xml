@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+接口名 -->
+<mapper namespace="com.demo.dao.TopicCommentDao">
+	<resultMap id="TopicCommentResultMap" type="com.demo.pojo.TopicComment">
+	    <id column="topic_comment_id" jdbcType="INTEGER" property="topicCommentId" />
+	    <result column="topic_id" jdbcType="INTEGER" property="topicId" />
+	    <result column="topic_comment_uid" jdbcType="INTEGER" property="topicCommentUId" />
+	    <result column="topic_comment_content" jdbcType="VARCHAR" property="topicCommentContent" />
+	    <result column="topic_comment_dateTime" jdbcType="VARCHAR" property="topicCommentDateTime" />
+	    <result column="topic_comment_likeNum" jdbcType="INTEGER" property="topicCommentLikeNum" />
+	</resultMap>
+	
+	<sql id="TopicComment_Column_List">
+    	topic_comment_id, topic_id, topic_comment_uid, topic_comment_content, topic_comment_dateTime, topic_comment_likeNum
+  	</sql>
+  	
+  	<!--根据话题id查找评论 -->
+	<select id="queryTopicCommentByTopicId" parameterType="java.lang.Integer" resultMap="TopicCommentResultMap">
+		select 
+		<include refid="TopicComment_Column_List" />
+		from topic_comment_table
+		<where>
+            topic_id = #{topicId}
+    	</where>
+	</select>
+	
+	
+	<!--新增评论 -->
+    <insert id="insertTopicComment" parameterType="com.demo.pojo.TopicComment">
+        insert into topic_comment_table(topic_id, topic_comment_uid, topic_comment_content, topic_comment_dateTime, topic_comment_likeNum) 
+        values(#{topicId}, #{topicCommentUId}, #{topicCommentContent}, #{topicCommentDateTime}, #{topicCommentLikeNum});
+    </insert>
+    
+    <!--新增点赞数 -->
+    <update id="addTopicCommentLikeNum" parameterType="java.lang.Integer">
+    	update topic_comment_table 
+    	set topic_comment_likeNum = topic_comment_likeNum + 1 
+    	where topic_comment_id = #{topicCommentId};
+    </update>
+    
+</mapper>
